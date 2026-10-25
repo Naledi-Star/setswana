@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: puo-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: puo
+      POSTGRES_PASSWORD: puo
+      POSTGRES_DB: puo
+    ports:
+      - '5432:5432'
+    volumes:
+      - puo-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U puo -d puo']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  puo-pgdata:

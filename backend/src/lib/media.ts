@@ -1,0 +1,28 @@
+import { existsSync } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const here = path.dirname(fileURLToPath(import.meta.url))
+export const backendRoot = path.resolve(here, '../..')
+export const contentDir = path.join(backendRoot, 'content')
+export const audioDir = path.join(contentDir, 'audio')
+
+const SAFE_FILENAME = /^[a-z0-9][a-z0-9._-]*\.(mp3|m4a|wav)$/i
+
+export function isSafeAudioFilename(filename: string): boolean {
+  return SAFE_FILENAME.test(filename) && !filename.includes('..')
+}
+
+/** Resolves `/media/<file>` (or a bare filename) to a file inside content/audio. */
+export function audioFileFromUrl(url: string): string | null {
+  const filename = url.startsWith('/media/') ? url.slice('/media/'.length) : url
+  if (!isSafeAudioFilename(filename)) return null
+  const resolved = path.join(audioDir, filename)
+  if (!resolved.startsWith(audioDir)) return null
+  return resolved
+}
+
+export function audioUrlExists(url: string): boolean {
+  const file = audioFileFromUrl(url)
+  return Boolean(file && existsSync(file))
+}

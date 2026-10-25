@@ -1,0 +1,12 @@
+node_modules/
+**/node_modules/
+.env
+**/.env
+**/.expo/
+**/dist/
+**/dist-check/
+backend/.pgdata/
+backend/smoke.log
+backend/path.json
+*.log
+.DS_Store

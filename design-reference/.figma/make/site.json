@@ -1,0 +1,10 @@
+{
+  "description": "Engage in interactive Setswana language lessons with daily goals, quizzes, and pronunciation practice featuring a vibrant Botswana-inspired design.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

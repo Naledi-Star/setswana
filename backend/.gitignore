@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+*.log
+content/audio/*.mp3
+content/audio/*.m4a
+!content/audio/.gitkeep

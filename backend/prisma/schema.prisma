@@ -1,0 +1,356 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  LEARNER
+  ADMIN
+}
+
+enum Platform {
+  ios
+  android
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+enum ExerciseType {
+  TRANSLATE_MC
+  MATCH_PAIRS
+  FILL_BLANK
+  LISTEN_CHOOSE
+  TYPE_ANSWER
+  BUILD_SENTENCE
+  SPEAK
+  REVIEW_CARD
+}
+
+model User {
+  id                    String    @id @default(uuid()) @db.Uuid
+  email                 String?   @unique
+  emailVerifiedAt       DateTime?
+  passwordHash          String?
+  googleSub             String?   @unique
+  avatarUrl             String?
+  role                  Role      @default(LEARNER)
+  displayName           String
+  timezone              String    @default("Africa/Gaborone")
+  dailyGoalLessons      Int       @default(5)
+  reminderEnabled       Boolean   @default(false)
+  reminderLocalTime     String    @default("18:30")
+  streakReminderEnabled Boolean   @default(false)
+  lastActiveAt          DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  deletedAt             DateTime?
+
+  stats          UserStats?
+  refreshTokens  RefreshToken[]
+  resetTokens    PasswordResetToken[]
+  attempts       LessonAttempt[]
+  activities     DailyActivity[]
+  reviewItems    ReviewItem[]
+  devices        DeviceToken[]
+  auditEvents    AuditEvent[]
+  idempotency    IdempotencyKey[]
+
+  @@index([deletedAt])
+}
+
+model UserStats {
+  userId          String   @id @db.Uuid
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalXp         Int      @default(0)
+  currentStreak   Int      @default(0)
+  longestStreak   Int      @default(0)
+  lastStreakDate  DateTime? @db.Date
+  hearts          Int      @default(5)
+  heartsUpdatedAt DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model RefreshToken {
+  id           String    @id @default(uuid()) @db.Uuid
+  userId       String    @db.Uuid
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyId     String    @db.Uuid
+  tokenHash    String    @unique
+  deviceId     String
+  platform     Platform
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  replacedById String?   @db.Uuid
+  createdAt    DateTime  @default(now())
+  lastUsedAt   DateTime?
+
+  @@index([userId])
+  @@index([familyId])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+}
+
+model Unit {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique
+  position    Int
+  title       String
+  titleEn     String
+  description String?
+  colour      String   @default("blue")
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  lessons Lesson[]
+  words   Word[]
+
+  @@index([position])
+}
+
+model Lesson {
+  id          String   @id @default(uuid()) @db.Uuid
+  unitId      String   @db.Uuid
+  unit        Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  slug        String   @unique
+  position    Int
+  title       String
+  subtitle    String?
+  kind        String   @default("LESSON")
+  xpBonus     Int      @default(10)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  exercises Exercise[]
+  attempts  LessonAttempt[]
+
+  @@index([unitId, position])
+}
+
+model Word {
+  id           String   @id @default(uuid()) @db.Uuid
+  slug         String   @unique
+  unitId       String?  @db.Uuid
+  unit         Unit?    @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  setswana     String
+  english      String
+  notes        String?
+  pluralForm   String?
+  formalForm   String?
+  phonetic     String?
+  audioUrl     String?
+  partOfSpeech String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  exercises   ExerciseWord[]
+  reviewItems ReviewItem[]
+
+  @@index([setswana])
+}
+
+model Exercise {
+  id          String       @id @default(uuid()) @db.Uuid
+  lessonId    String       @db.Uuid
+  lesson      Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  slug        String
+  position    Int
+  type        ExerciseType
+  prompt      Json
+  answerKey   Json
+  explanation String?
+  xp          Int          @default(10)
+  audioUrl    String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  words   ExerciseWord[]
+  attempts ExerciseAttempt[]
+
+  @@unique([lessonId, slug])
+  @@index([lessonId, position])
+}
+
+model ExerciseWord {
+  exerciseId String @db.Uuid
+  wordId     String @db.Uuid
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  word       Word     @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@id([exerciseId, wordId])
+}
+
+model LessonAttempt {
+  id             String        @id @default(uuid()) @db.Uuid
+  userId         String?       @db.Uuid
+  user           User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guestSessionId String?       @db.Uuid
+  guestSession   GuestSession? @relation(fields: [guestSessionId], references: [id], onDelete: Cascade)
+  lessonId       String        @db.Uuid
+  lesson         Lesson        @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  status         AttemptStatus @default(IN_PROGRESS)
+  heartsAtStart  Int
+  xpAwarded      Int           @default(0)
+  correctCount   Int           @default(0)
+  totalCount     Int           @default(0)
+  startedAt      DateTime      @default(now())
+  completedAt    DateTime?
+  clientVersion  String?
+
+  answers ExerciseAttempt[]
+
+  @@index([userId, lessonId])
+  @@index([guestSessionId])
+}
+
+model ExerciseAttempt {
+  id              String       @id @default(uuid()) @db.Uuid
+  lessonAttemptId String       @db.Uuid
+  lessonAttempt   LessonAttempt @relation(fields: [lessonAttemptId], references: [id], onDelete: Cascade)
+  exerciseId      String       @db.Uuid
+  exercise        Exercise     @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  submitted       Json
+  isCorrect       Boolean
+  skipped         Boolean      @default(false)
+  attemptNumber   Int          @default(1)
+  timeMs          Int?
+  createdAt       DateTime     @default(now())
+
+  @@index([lessonAttemptId, exerciseId])
+}
+
+model DailyActivity {
+  id               String   @id @default(uuid()) @db.Uuid
+  userId           String   @db.Uuid
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  localDate        DateTime @db.Date
+  lessonsCompleted Int      @default(0)
+  xpEarned         Int      @default(0)
+  correctCount     Int      @default(0)
+  totalCount       Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([userId, localDate])
+  @@index([userId, localDate])
+}
+
+model ReviewItem {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @db.Uuid
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordId         String    @db.Uuid
+  word           Word      @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  stage          Int       @default(0)
+  dueAt          DateTime
+  lastReviewedAt DateTime?
+  timesCorrect   Int       @default(0)
+  timesWrong     Int       @default(0)
+  createdAt      DateTime  @default(now())
+
+  @@unique([userId, wordId])
+  @@index([userId, dueAt])
+}
+
+model DeviceToken {
+  id            String    @id @default(uuid()) @db.Uuid
+  userId        String    @db.Uuid
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expoPushToken String    @unique
+  platform      Platform
+  deviceId      String
+  createdAt     DateTime  @default(now())
+  lastSeenAt    DateTime?
+  disabledAt    DateTime?
+
+  @@index([userId])
+}
+
+model GuestSession {
+  id             String    @id @default(uuid()) @db.Uuid
+  tokenHash      String    @unique
+  deviceId       String
+  platform       Platform
+  timezone       String    @default("Africa/Gaborone")
+  expiresAt      DateTime
+  createdAt      DateTime  @default(now())
+  mergedIntoUserId String? @db.Uuid
+  mergedAt       DateTime?
+  xp             Int       @default(0)
+  correctCount   Int       @default(0)
+  totalCount     Int       @default(0)
+  hearts         Int       @default(5)
+  heartsUpdatedAt DateTime @default(now())
+  lastLocalDate  String?
+  attempts       LessonAttempt[]
+}
+
+model AppConfig {
+  id        Int      @id @default(1)
+  data      Json
+  updatedAt DateTime @updatedAt
+}
+
+model IdempotencyKey {
+  id        String   @id @default(uuid()) @db.Uuid
+  scope     String
+  key       String
+  userId    String?  @db.Uuid
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  response  Json
+  createdAt DateTime @default(now())
+
+  @@unique([scope, key])
+  @@index([createdAt])
+}
+
+model NotificationLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  kind      String
+  localDate String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, kind, localDate])
+}
+
+model LoginThrottle {
+  email         String    @id
+  failedCount   Int       @default(0)
+  firstFailedAt DateTime?
+  lockedUntil   DateTime?
+  updatedAt     DateTime  @updatedAt
+}
+
+model AuditEvent {
+  id          String   @id @default(uuid()) @db.Uuid
+  actorUserId String?  @db.Uuid
+  actor       User?    @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+  action      String
+  targetType  String?
+  targetId    String?
+  ip          String?
+  userAgent   String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([actorUserId])
+}

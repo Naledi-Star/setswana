@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Puo",
+    "slug": "puo",
+    "version": "1.0.0",
+    "scheme": "puo",
+    "orientation": "default",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fffdf7"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.puo.online",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Puo records your voice so you can hear yourself repeat a Setswana phrase. Recordings stay on your device."
+      }
+    },
+    "android": {
+      "package": "com.puo.online",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#fffdf7"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": ["RECORD_AUDIO"]
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-audio",
+      "expo-font",
+      "expo-notifications",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/logo.png",
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "backgroundColor": "#fffdf7"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
+    }
+  }
+}
