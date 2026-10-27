@@ -114,7 +114,8 @@ export type RegisterInput = {
   password: string
   displayName: string
   timezone?: string
-  guestToken?: string
+  /** `null` means "not a guest"; the client omits or nulls it for a regular sign-up. */
+  guestToken?: string | null
 }
 
 export async function register(input: RegisterInput, meta: { ip?: string; userAgent?: string }) {

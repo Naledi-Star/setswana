@@ -4,6 +4,36 @@ import { EXERCISE_TYPES, type ExerciseTypeName } from '../config/tunables.js'
 const nonEmpty = z.string().trim().min(1)
 const optionalText = z.string().trim().min(1).optional().nullable()
 
+/** The learner-facing lesson page: reference tables plus cultural notes. */
+export const lessonGuideSchema = z
+  .object({
+    sections: z
+      .array(
+        z
+          .object({
+            heading: nonEmpty,
+            rows: z.array(
+              z
+                .object({
+                  setswana: nonEmpty,
+                  pronunciation: optionalText,
+                  english: nonEmpty,
+                  sample: optionalText,
+                })
+                .strict(),
+            ),
+          })
+          .strict(),
+      )
+      .default([]),
+    tips: z
+      .object({ heading: nonEmpty, items: z.array(nonEmpty) })
+      .strict()
+      .optional()
+      .nullable(),
+  })
+  .strict()
+
 export const wordContentSchema = z
   .object({
     slug: z
@@ -47,6 +77,7 @@ export const lessonContentSchema = z
     subtitle: optionalText,
     kind: z.enum(['LESSON', 'PRACTICE']).default('LESSON'),
     xpBonus: z.number().int().min(0).max(500).optional(),
+    guide: lessonGuideSchema.optional().nullable(),
     exercises: z.array(exerciseContentSchema).min(1),
   })
   .strict()
@@ -61,11 +92,14 @@ export const unitContentSchema = z
     titleEn: nonEmpty,
     description: optionalText,
     colour: z.enum(['blue', 'coral', 'gold', 'green']).default('blue'),
+    /** Clips are declared but not recorded yet, so missing audio is a warning, not an error. */
+    audioPending: z.boolean().default(false),
     words: z.array(wordContentSchema).default([]),
     lessons: z.array(lessonContentSchema).default([]),
   })
   .strict()
 
+export type LessonGuideContent = z.infer<typeof lessonGuideSchema>
 export type WordContent = z.infer<typeof wordContentSchema>
 export type ExerciseContent = z.infer<typeof exerciseContentSchema>
 export type LessonContent = z.infer<typeof lessonContentSchema>
@@ -76,8 +110,11 @@ export type ContentIssue = { path: string; message: string; severity: 'error' | 
 export type ValidateOptions = {
   /** Returns true when the audio file referenced by the url exists. */
   audioExists?: (url: string) => boolean
-  /** Demo content is allowed to omit audio, but never to reference a missing file. */
-  demo?: boolean
+  /**
+   * The unit declares clips that are not recorded yet. Declared-but-missing audio is then
+   * reported as a warning (a to-record checklist) instead of failing the seed.
+   */
+  audioPending?: boolean
 }
 
 function optionsFrom(prompt: Record<string, unknown>): { id: string; text: string }[] {
@@ -115,7 +152,10 @@ function validateExercise(
 
   if (exercise.audioUrl) {
     if (opts.audioExists && !opts.audioExists(exercise.audioUrl)) {
-      push(`Audio file missing: ${exercise.audioUrl}`)
+      push(
+        `Recording not found: ${exercise.audioUrl}. Record it and drop the file in content/audio/.`,
+        opts.audioPending ? 'warning' : 'error',
+      )
     }
   }
 
@@ -130,11 +170,11 @@ function validateExercise(
       if (typeof correctId !== 'string' || !options.some((option) => option.id === correctId)) {
         push('correctOptionId must reference one of the options.')
       }
-      if (!opts.demo && !exercise.audioUrl && type === 'LISTEN_CHOOSE') {
-        push('Listen-and-choose exercises need a recording.')
-      }
-      if (opts.demo && type === 'LISTEN_CHOOSE') {
-        push('Demo lesson has no recording; listen-and-choose is skipped.', 'warning')
+      if (!exercise.audioUrl && type === 'LISTEN_CHOOSE') {
+        push(
+          'No recording yet; this listening exercise is skipped until audio is added at the URL above.',
+          'warning',
+        )
       }
       break
     }
@@ -163,6 +203,12 @@ function validateExercise(
     case 'TYPE_ANSWER': {
       if (!stringArray(key.answers).length) push('Typed answers need at least one accepted answer.')
       if (typeof prompt.sourceText !== 'string') push('Typed answers need prompt.sourceText.')
+      if (prompt.listenFirst === true && !exercise.audioUrl) {
+        push(
+          'No recording yet; this listen-and-write exercise is skipped until audio is added at the URL above.',
+          'warning',
+        )
+      }
       break
     }
 
@@ -222,6 +268,7 @@ export function validateUnitContent(
   basePath = unit.slug,
 ): ContentIssue[] {
   const issues: ContentIssue[] = []
+  const audioOpts: ValidateOptions = { ...opts, audioPending: unit.audioPending }
   const wordSlugs = new Set<string>()
   const seenSetswana = new Map<string, string>()
 
@@ -246,8 +293,12 @@ export function validateUnitContent(
       })
     }
 
-    if (word.audioUrl && opts.audioExists && !opts.audioExists(word.audioUrl)) {
-      issues.push({ path, message: `Audio file missing: ${word.audioUrl}`, severity: 'error' })
+    if (word.audioUrl && audioOpts.audioExists && !audioOpts.audioExists(word.audioUrl)) {
+      issues.push({
+        path,
+        message: `Recording not found: ${word.audioUrl}. Record it and drop the file in content/audio/.`,
+        severity: audioOpts.audioPending ? 'warning' : 'error',
+      })
     }
   }
 
@@ -263,8 +314,8 @@ export function validateUnitContent(
     }
     lessonSlugs.add(lesson.slug)
 
-    if (lesson.exercises.length < 3 || lesson.exercises.length > 8) {
-      issues.push({ path, message: 'A lesson needs 3–8 exercises.', severity: 'error' })
+    if (lesson.exercises.length < 3 || lesson.exercises.length > 12) {
+      issues.push({ path, message: 'A lesson needs 3–12 exercises.', severity: 'error' })
     }
 
     const exerciseSlugs = new Set<string>()
@@ -278,7 +329,7 @@ export function validateUnitContent(
         })
       }
       exerciseSlugs.add(exercise.slug)
-      validateExercise(exercise, exercisePath, opts, issues, wordSlugs)
+      validateExercise(exercise, exercisePath, audioOpts, issues, wordSlugs)
     }
   }
 

@@ -9,22 +9,22 @@ import {
 } from '../src/content/schema.js'
 import { contentDir } from '../src/lib/media.js'
 
-async function loadDemo() {
+async function loadUnit() {
   const raw = JSON.parse(
-    await readFile(path.join(contentDir, 'units', 'demo.json'), 'utf8'),
+    await readFile(path.join(contentDir, 'units', 'basic-greetings.json'), 'utf8'),
   ) as unknown
   return unitContentSchema.parse(raw)
 }
 
 describe('seed content', () => {
   it('parses and validates without errors', async () => {
-    const unit = await loadDemo()
+    const unit = await loadUnit()
     const issues = validateUnitContent(unit)
     expect(issues.filter((issue) => issue.severity === 'error')).toEqual([])
   })
 
   it('uses unique word slugs and lesson slugs', async () => {
-    const unit = await loadDemo()
+    const unit = await loadUnit()
     const wordSlugs = unit.words.map((word) => word.slug)
     const lessonSlugs = unit.lessons.map((lesson) => lesson.slug)
     expect(new Set(wordSlugs).size).toBe(wordSlugs.length)
@@ -32,7 +32,7 @@ describe('seed content', () => {
   })
 
   it('never ships an answer key inside a prompt', async () => {
-    const unit = await loadDemo()
+    const unit = await loadUnit()
     for (const lesson of unit.lessons) {
       for (const exercise of lesson.exercises) {
         expect(JSON.stringify(exercise.prompt)).not.toContain('correctOptionId')

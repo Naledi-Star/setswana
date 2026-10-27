@@ -155,7 +155,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         timezone: device.timezone,
         deviceId: device.deviceId,
         platform: device.platform,
-        guestToken,
+        // null means "not a guest" — the key is omitted rather than sent as null.
+        guestToken: guestToken ?? undefined,
       })
       await adoptSession(session)
     },
@@ -169,7 +170,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         idToken,
         deviceId: device.deviceId,
         platform: device.platform,
-        guestToken,
+        guestToken: guestToken ?? undefined,
       })
       await adoptSession(session)
     },

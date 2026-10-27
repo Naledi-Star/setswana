@@ -4,6 +4,7 @@ import { getTunables } from '../../config/app-config.js'
 import { prisma } from '../../db/client.js'
 import { asyncHandler, requireUserId } from '../../lib/http.js'
 import { notFound } from '../../lib/errors.js'
+import { servableAudioUrl } from '../../lib/media.js'
 import { scheduleReview, wordStatus } from '../../lib/srs.js'
 import { dateOnly, todayIn } from '../../lib/time.js'
 import { parseBody, parseQuery } from '../../lib/validation.js'
@@ -37,7 +38,7 @@ wordsRouter.get(
           setswana: item.word.setswana,
           english: item.word.english,
           phonetic: item.word.phonetic,
-          audioUrl: item.word.audioUrl,
+          audioUrl: servableAudioUrl(item.word.audioUrl),
           notes: item.word.notes,
           pluralForm: item.word.pluralForm,
           formalForm: item.word.formalForm,
@@ -89,7 +90,7 @@ wordsRouter.get(
       setswana: word.setswana,
       english: word.english,
       phonetic: word.phonetic,
-      audioUrl: word.audioUrl,
+      audioUrl: servableAudioUrl(word.audioUrl),
       notes: word.notes,
       pluralForm: word.pluralForm,
       formalForm: word.formalForm,
@@ -144,7 +145,7 @@ wordsRouter.get(
           setswana: item.word.setswana,
           english: item.word.english,
           phonetic: item.word.phonetic,
-          audioUrl: item.word.audioUrl,
+          audioUrl: servableAudioUrl(item.word.audioUrl),
           notes: item.word.notes,
           stage: item.stage,
         })),
@@ -154,7 +155,7 @@ wordsRouter.get(
           setswana: item.word.setswana,
           english: item.word.english,
           phonetic: item.word.phonetic,
-          audioUrl: item.word.audioUrl,
+          audioUrl: servableAudioUrl(item.word.audioUrl),
           notes: item.word.notes,
           stage: item.stage,
         })),

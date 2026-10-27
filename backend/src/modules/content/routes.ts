@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { prisma } from '../../db/client.js'
 import { asyncHandler, requireUserId } from '../../lib/http.js'
 import { forbidden, notFound } from '../../lib/errors.js'
+import { servableAudioUrl } from '../../lib/media.js'
 import { parseQuery } from '../../lib/validation.js'
 import { authenticate, requireUser } from '../../middleware/auth.js'
 import {
@@ -124,18 +125,24 @@ contentRouter.get(
       },
     })
 
+    const servableExercises = exercises.map((exercise) => ({
+      ...exercise,
+      audioUrl: servableAudioUrl(exercise.audioUrl),
+    }))
+
     res.json({
       id: lesson.id,
       slug: lesson.slug,
       title: lesson.title,
       subtitle: lesson.subtitle,
       xpBonus: lesson.xpBonus,
+      guide: lesson.guide ?? null,
       unit: {
         id: lesson.unit.id,
         title: lesson.unit.title,
         colour: lesson.unit.colour,
       },
-      exercises,
+      exercises: servableExercises,
     })
   }),
 )
@@ -163,7 +170,7 @@ contentRouter.get(
         setswana: link.word.setswana,
         english: link.word.english,
         phonetic: link.word.phonetic,
-        audioUrl: link.word.audioUrl,
+        audioUrl: servableAudioUrl(link.word.audioUrl),
         notes: link.word.notes,
         pluralForm: link.word.pluralForm,
         formalForm: link.word.formalForm,

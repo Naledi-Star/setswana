@@ -198,6 +198,31 @@ suite('Puo API', () => {
     }
   })
 
+  it('creates an account when the client sends a null guest token', async () => {
+    // The app always sends the guestToken key; without a guest session it is null.
+    const email = `null-guest-${Date.now()}@example.com`
+    const password = 'IntegrationTest123'
+
+    const registered = await request(app).post('/api/v1/auth/register').send({
+      email,
+      password,
+      displayName: 'Null guest',
+      timezone: 'Africa/Gaborone',
+      deviceId: 'null-guest-device',
+      platform: 'android',
+      guestToken: null,
+    })
+
+    expect(registered.status).toBe(201)
+    expect(registered.body.user.email).toBe(email)
+
+    // The account is stored and can be used later, independent of the guest token.
+    await request(app)
+      .post('/api/v1/auth/login')
+      .send({ email, password, deviceId: 'null-guest-device', platform: 'android' })
+      .expect(200)
+  })
+
   it('requires authentication for progress', async () => {
     await request(app).get('/api/v1/path').expect(401)
     await request(app).get('/api/v1/me').expect(401)

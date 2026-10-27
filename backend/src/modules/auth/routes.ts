@@ -35,7 +35,7 @@ const registerSchema = z
     password: z.string().min(1).max(128),
     displayName: z.string().trim().min(1).max(60),
     timezone: z.string().trim().max(64).optional(),
-    guestToken: z.string().trim().max(200).optional(),
+    guestToken: z.string().trim().max(200).nullish(),
     deviceId: deviceIdSchema,
     platform: platformSchema,
   })
@@ -87,7 +87,7 @@ const googleSchema = z
     idToken: z.string().trim().min(20).max(4096),
     deviceId: deviceIdSchema,
     platform: platformSchema,
-    guestToken: z.string().trim().max(200).optional(),
+    guestToken: z.string().trim().max(200).nullish(),
   })
   .strict()
 

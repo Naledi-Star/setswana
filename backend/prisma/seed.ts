@@ -28,7 +28,8 @@ export async function seedContent(client: PrismaClient = prisma): Promise<Counts
   const units = await loadUnits()
 
   const seenUnitSlugs = new Set<string>()
-  for (const { unit, file } of units) {
+  // Position follows filename order, so content files sort into the learning path.
+  for (const [unitIndex, { unit, file }] of units.entries()) {
     if (seenUnitSlugs.has(unit.slug)) {
       throw new Error(`Duplicate unit slug "${unit.slug}" (found again in ${file}).`)
     }
@@ -50,7 +51,7 @@ export async function seedContent(client: PrismaClient = prisma): Promise<Counts
         titleEn: unit.titleEn,
         description: unit.description ?? null,
         colour: unit.colour,
-        position: 0,
+        position: unitIndex,
         isPublished: true,
       },
       update: {
@@ -58,6 +59,7 @@ export async function seedContent(client: PrismaClient = prisma): Promise<Counts
         titleEn: unit.titleEn,
         description: unit.description ?? null,
         colour: unit.colour,
+        position: unitIndex,
       },
     })
     counts.units += 1
@@ -104,6 +106,7 @@ export async function seedContent(client: PrismaClient = prisma): Promise<Counts
           subtitle: lesson.subtitle ?? null,
           kind: lesson.kind,
           xpBonus: lesson.xpBonus ?? 10,
+          guide: lesson.guide ?? Prisma.DbNull,
           isPublished: true,
         },
         update: {
@@ -113,6 +116,7 @@ export async function seedContent(client: PrismaClient = prisma): Promise<Counts
           subtitle: lesson.subtitle ?? null,
           kind: lesson.kind,
           xpBonus: lesson.xpBonus ?? 10,
+          guide: lesson.guide ?? Prisma.DbNull,
         },
       })
       counts.lessons += 1
@@ -155,22 +159,6 @@ export async function seedContent(client: PrismaClient = prisma): Promise<Counts
           })
         }
       }
-    }
-  }
-
-  // Stable unit ordering follows filename order on first seed.
-  const ordered = await client.unit.findMany({ orderBy: { slug: 'asc' } })
-  const demo = ordered.findIndex((unit) => unit.slug === 'demo')
-  if (demo > 0) {
-    const demoUnit = ordered[demo]
-    if (demoUnit) {
-      await client.unit.update({ where: { id: demoUnit.id }, data: { position: 0 } })
-    }
-    let position = 1
-    for (const unit of ordered) {
-      if (unit.slug === 'demo') continue
-      await client.unit.update({ where: { id: unit.id }, data: { position } })
-      position += 1
     }
   }
 

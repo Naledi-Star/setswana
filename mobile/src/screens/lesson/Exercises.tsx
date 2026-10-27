@@ -280,24 +280,60 @@ export function TypeAnswerExercise({ exercise, disabled, onAnswer }: ExercisePro
   const prompt = record(exercise.prompt)
   const [value, setValue] = useState('')
   const direction = text(prompt.direction, 'en-tn')
+  // Dictation: the learner hears the phrase and writes it down instead of reading it.
+  const listenFirst = prompt.listenFirst === true
 
   const submit = () => {
     if (!value.trim()) return
     onAnswer({ answer: value })
   }
 
+  if (listenFirst && !exercise.audioUrl) {
+    return (
+      <View style={styles.exercise}>
+        <View style={styles.notice}>
+          <Icon name="speaker" size={20} color={colors.coral} />
+          <Text style={[type.bodySmall, { color: colors.errorText }]}>
+            This clip hasn’t been recorded yet, so the listening question is skipped — no heart lost.
+          </Text>
+        </View>
+        <Button
+          label="Skip for now"
+          variant="secondary"
+          onPress={() => onAnswer({ skipped: true })}
+          disabled={disabled}
+        />
+      </View>
+    )
+  }
+
   return (
     <View style={styles.exercise}>
-      <View style={styles.promptText}>
-        <Text style={styles.phrase}>{text(prompt.sourceText)}</Text>
-        <Text style={styles.hint}>
-          {direction === 'en-tn' ? 'Write it in Setswana' : 'Write it in English'}
-        </Text>
-      </View>
+      {listenFirst ? (
+        <>
+          <View style={styles.listenRow}>
+            <AudioButton audioUrl={exercise.audioUrl} variant="large" label="Play the phrase" />
+          </View>
+          <Text style={styles.hint}>Listen and write down what you hear.</Text>
+        </>
+      ) : (
+        <View style={styles.promptText}>
+          <Text style={styles.phrase}>{text(prompt.sourceText)}</Text>
+          <Text style={styles.hint}>
+            {direction === 'en-tn' ? 'Write it in Setswana' : 'Write it in English'}
+          </Text>
+        </View>
+      )}
       <TextInput
         value={value}
         onChangeText={setValue}
-        placeholder={direction === 'en-tn' ? 'Setswana answer' : 'English answer'}
+        placeholder={
+          listenFirst
+            ? 'Write what you hear'
+            : direction === 'en-tn'
+              ? 'Setswana answer'
+              : 'English answer'
+        }
         placeholderTextColor={colors.muted}
         editable={!disabled}
         style={styles.input}

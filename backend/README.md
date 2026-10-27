@@ -8,7 +8,7 @@ Express + TypeScript + Prisma + PostgreSQL. Every lesson, word, score, heart, st
 cp .env.example .env          # set DATABASE_URL and JWT_SECRET
 npm install
 npx prisma migrate deploy     # or: npx prisma migrate dev
-npm run seed                  # demo content (idempotent)
+npm run seed                  # content (idempotent)
 npm run dev                   # http://localhost:4000
 ```
 
@@ -48,11 +48,11 @@ npm test
 
 1. Put lesson documents' output into `content/units/<slug>.json` (schema in `src/content/schema.ts`).
 2. Drop recordings in `content/audio/<slug>.mp3`, referenced as `/media/<slug>.mp3`.
-3. `npm run content:validate` — fails on missing audio, bad answer keys, unknown words, duplicate slugs, invalid exercise shapes.
+3. `npm run content:validate` — fails on missing audio, bad answer keys, unknown words, duplicate slugs, invalid exercise shapes. While a unit's clips are still unrecorded, set `"audioPending": true` on the unit so the missing files are listed as a to-record checklist (warnings) instead of failing the seed. Remove the flag once everything is recorded and validation goes strict again.
 4. `npm run seed` — idempotent upsert by slug; never deletes learner data.
 5. Publish units/lessons through the admin API or app; drafts never reach learners.
 
-Demo content is deliberately labelled: only the mockup's verified vocabulary is used, and listening exercises are omitted because there are no recordings yet. Unit names, phonetics and the singular/plural forms must come from the content owner.
+Lesson 1 ("Basic Greetings and Expressions") ships with its vocabulary, phonetic respellings, the learner-facing guide tables and cultural tips. Every word and the three audio exercises already declare their clip (`/media/<slug>.mp3`); `audioPending: true` records that the files are not recorded yet. Audio is only advertised to clients once the file is on disk (`servableAudioUrl`), so the app hides the speaker button and listening exercises skip politely until the owner records a clip and drops it in `content/audio/` — at which point it plays with no re-seed and no app release.
 
 ## API surface
 

@@ -10,6 +10,8 @@ import { colors, fonts, radius, spacing } from '../design/tokens'
 import { OnboardingScreen } from '../screens/Onboarding'
 import { ForgotPasswordScreen, SignInScreen, SignUpScreen, WelcomeScreen } from '../screens/auth/AuthScreens'
 import { HomeScreen } from '../screens/learn/HomeScreen'
+import { LessonsScreen } from '../screens/lessons/LessonsScreen'
+import { LessonGuideScreen } from '../screens/lessons/LessonGuideScreen'
 import { LessonScreen } from '../screens/lesson/LessonScreen'
 import { CompleteScreen } from '../screens/lesson/CompleteScreen'
 import { WordsScreen } from '../screens/words/WordsScreen'
@@ -31,6 +33,8 @@ import type {
   GuestStackParamList,
   LearnStackParamList,
   LearnScreenProps,
+  LessonsScreenProps,
+  LessonsStackParamList,
   ProgressStackParamList,
   TabParamList,
   WordsStackParamList,
@@ -38,6 +42,7 @@ import type {
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>()
 const LearnStackNav = createNativeStackNavigator<LearnStackParamList>()
+const LessonsStackNav = createNativeStackNavigator<LessonsStackParamList>()
 const WordsStackNav = createNativeStackNavigator<WordsStackParamList>()
 const ProgressStackNav = createNativeStackNavigator<ProgressStackParamList>()
 const AdminStackNav = createNativeStackNavigator<AdminStackParamList>()
@@ -131,6 +136,50 @@ function LearnNavigator() {
   )
 }
 
+function LessonsLesson({ route, navigation }: LessonsScreenProps<'Lesson'>) {
+  return (
+    <LessonScreen
+      lessonId={route.params.lessonId}
+      onExit={() => navigation.goBack()}
+      onReviewWords={() => navigation.getParent()?.navigate('WordsTab' as never)}
+      onComplete={(summary, lessonTitle, nextLessonId) =>
+        navigation.replace('Complete', { summary, lessonTitle, nextLessonId })
+      }
+    />
+  )
+}
+
+function LessonsComplete({ route, navigation }: LessonsScreenProps<'Complete'>) {
+  const { summary, lessonTitle, nextLessonId } = route.params
+  return (
+    <CompleteScreen
+      summary={summary}
+      lessonTitle={lessonTitle}
+      nextLessonId={nextLessonId}
+      onBack={() => navigation.popToTop()}
+      onNext={() => {
+        if (nextLessonId) navigation.replace('Lesson', { lessonId: nextLessonId })
+        else navigation.popToTop()
+      }}
+    />
+  )
+}
+
+function LessonsNavigator() {
+  return (
+    <LessonsStackNav.Navigator screenOptions={stackOptions}>
+      <LessonsStackNav.Screen name="Lessons" component={LessonsScreen} />
+      <LessonsStackNav.Screen name="LessonGuide" component={LessonGuideScreen} />
+      <LessonsStackNav.Screen name="Lesson" component={LessonsLesson} />
+      <LessonsStackNav.Screen
+        name="Complete"
+        component={LessonsComplete}
+        options={{ gestureEnabled: false }}
+      />
+    </LessonsStackNav.Navigator>
+  )
+}
+
 function WordsNavigator() {
   return (
     <WordsStackNav.Navigator screenOptions={stackOptions}>
@@ -162,7 +211,7 @@ function AdminNavigator() {
   )
 }
 
-function tabIcon(name: 'home' | 'cards' | 'chart' | 'admin') {
+function tabIcon(name: 'home' | 'book' | 'cards' | 'chart' | 'admin') {
   return ({ color, size }: { color: string; size: number }) => (
     <Icon name={name} size={size} color={color} filled={false} />
   )
@@ -187,6 +236,11 @@ function MainTabs() {
         name="LearnTab"
         component={LearnNavigator}
         options={{ title: 'Learn', tabBarIcon: tabIcon('home') }}
+      />
+      <Tabs.Screen
+        name="LessonsTab"
+        component={LessonsNavigator}
+        options={{ title: 'Lessons', tabBarIcon: tabIcon('book') }}
       />
       <Tabs.Screen
         name="WordsTab"

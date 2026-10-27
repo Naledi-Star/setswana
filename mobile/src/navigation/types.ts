@@ -21,6 +21,17 @@ export type LearnStackParamList = {
   Settings: undefined
 }
 
+export type LessonsStackParamList = {
+  Lessons: undefined
+  LessonGuide: { lessonId: string }
+  Lesson: { lessonId: string }
+  Complete: {
+    summary: CompletionSummary
+    lessonTitle: string
+    nextLessonId: string | null
+  }
+}
+
 export type WordsStackParamList = {
   Words: undefined
   WordDetail: { wordId: string }
@@ -53,6 +64,7 @@ export type GuestStackParamList = {
 
 export type TabParamList = {
   LearnTab: undefined
+  LessonsTab: undefined
   WordsTab: undefined
   ProgressTab: undefined
   AdminTab: undefined
@@ -60,6 +72,11 @@ export type TabParamList = {
 
 export type LearnScreenProps<T extends keyof LearnStackParamList> = NativeStackScreenProps<
   LearnStackParamList,
+  T
+>
+
+export type LessonsScreenProps<T extends keyof LessonsStackParamList> = NativeStackScreenProps<
+  LessonsStackParamList,
   T
 >
 

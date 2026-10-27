@@ -57,15 +57,15 @@ async function main() {
   const pathResponse = await request('GET', '/api/v1/path', { token })
   check(pathResponse.status === 200, 'learning path loads')
   const units = pathResponse.body.units as Json[]
-  check(units.length === 1, 'demo path has one unit')
+  check(units.length === 1, 'the path has one unit')
   const firstLesson = (units[0]?.lessons as Json[])[0] as Json
   check(Boolean(firstLesson.id), 'first lesson is visible')
 
   const lesson = await request('GET', `/api/v1/lessons/${firstLesson.id as string}?preview=true`, { token })
   check(lesson.status === 200, 'lesson content loads')
   const exercises = lesson.body.exercises as Json[]
-  check(exercises.length === 4, 'lesson one has four exercises')
-  if (exercises.length !== 4) return
+  check(exercises.length === 9, 'lesson one has nine exercises')
+  if (exercises.length !== 9) return
   check(
     exercises.every((exercise) => !('answerKey' in exercise)),
     'answer keys are not leaked to the client',
@@ -111,37 +111,50 @@ async function main() {
         ['tn:p1', 'en:p1'],
         ['tn:p2', 'en:p2'],
         ['tn:p3', 'en:p3'],
+        ['tn:p4', 'en:p4'],
+        ['tn:p5', 'en:p5'],
       ],
     },
+    'fill-le-kae': { answer: 'kae' },
+    'listen-choose-reply': { skipped: true },
+    'listen-write-dumelang': { skipped: true },
     'type-thank-you': { answer: 'ke a leboga' },
-    'speak-dumela': { acknowledged: true },
+    'build-polite-request': { order: ['t1', 't2', 't3'] },
+    'speak-ke-a-leboga': { acknowledged: true },
+    'review-goodbye': { selfMark: 'good' },
   }
+  // These two need a recording; without one they skip without costing a heart.
+  const skippedSlugs = new Set(['listen-choose-reply', 'listen-write-dumelang'])
 
   for (const exercise of exercises) {
     if (exercise.slug === 'translate-dumela') continue
-    const answer = answersBySlug[exercise.slug as string]
+    const slug = exercise.slug as string
     const result = await request('POST', `/api/v1/attempts/${attemptId}/answers`, {
       token,
-      body: { exerciseId: exercise.id, answer },
+      body: { exerciseId: exercise.id, answer: answersBySlug[slug] },
     })
-    check(result.body.isCorrect === true, `${exercise.slug as string} scored correct`)
+    if (skippedSlugs.has(slug)) {
+      check(result.body.skipped === true, `${slug} is skipped until a recording exists`)
+      continue
+    }
+    check(result.body.isCorrect === true, `${slug} scored correct`)
   }
 
   const completed = await request('POST', `/api/v1/attempts/${attemptId}/complete`, { token })
   check(completed.status === 200, 'lesson completes')
   check((completed.body.streak as number) === 1, 'first lesson starts a one-day streak')
   check((completed.body.totalXp as number) > 0, 'XP is awarded')
-  check(typeof completed.body.nextLessonId === 'string', 'next lesson is suggested')
+  check(completed.body.nextLessonId === null, 'a single-lesson path suggests no next lesson')
 
   const me = await request('GET', '/api/v1/me', { token })
   check((me.body.stats as Json).lessonsToday === 1, 'daily goal activity is stored')
   check((me.body.stats as Json).hearts === 4, 'heart loss persists')
 
   const words = await request('GET', '/api/v1/words', { token })
-  check((words.body.words as Json[]).length === 3, 'completed lesson adds its three unique words')
+  check((words.body.words as Json[]).length === 9, 'completed lesson adds its unique words')
 
   const queue = await request('GET', '/api/v1/review/queue', { token })
-  check((queue.body.items as Json[]).length === 3, 'review queue contains lesson words')
+  check((queue.body.items as Json[]).length === 5, 'review queue offers five new words a day')
   const firstWord = (queue.body.items as Json[])[0] as Json
   const reviewed = await request('POST', '/api/v1/review/answers', {
     token,

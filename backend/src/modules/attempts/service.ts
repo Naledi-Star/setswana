@@ -221,7 +221,9 @@ export async function submitAnswer(
 
   const submitted = asRecord(input.answer)
   const wantsSkip = submitted.skipped === true
-  const skipAllowed = wantsSkip && exercise.type === 'LISTEN_CHOOSE'
+  // Dictation (a listen-first typed answer) skips like a listening exercise when the clip is missing.
+  const listenFirst = exercise.type === 'TYPE_ANSWER' && asRecord(exercise.prompt).listenFirst === true
+  const skipAllowed = wantsSkip && (exercise.type === 'LISTEN_CHOOSE' || listenFirst)
 
   const outcome = skipAllowed
     ? { isCorrect: false, correctAnswer: {} as Record<string, unknown>, skipped: true }

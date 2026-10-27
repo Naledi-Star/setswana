@@ -26,3 +26,14 @@ export function audioUrlExists(url: string): boolean {
   const file = audioFileFromUrl(url)
   return Boolean(file && existsSync(file))
 }
+
+/**
+ * Audio is only advertised to clients once its file is on disk. Content can therefore
+ * declare the clip it expects (`/media/dumela.mp3`) and the exercise, word card and
+ * speaker button start working the moment the recording is dropped into `content/audio/` —
+ * with no re-seed and no app release.
+ */
+export function servableAudioUrl(url: string | null | undefined): string | null {
+  if (!url) return null
+  return audioUrlExists(url) ? url : null
+}

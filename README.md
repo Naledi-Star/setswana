@@ -39,7 +39,7 @@ Both apps have their own README with the details, including the test database an
 
 ## Deliberate limits
 
-- Content is seed/demo content: only the vocabulary verified from the mockup is used, listening exercises are omitted until recordings exist, and unverified phonetics are left out rather than invented.
+- Content is Lesson 1 ("Basic Greetings and Expressions") as supplied by the owner. Its listening exercises are in place but not yet recorded, so they skip politely until the audio clips are added; nothing is text-to-speech.
 - Email delivery is not configured, so password reset prints the link in the API console and reports `features.emailDelivery: false` to the app. Email verification is out of scope per the spec.
 - Push needs a configured EAS project and `PUSH_ENABLED=true`; the preference is stored either way.
 - Google sign-in stays hidden until client IDs are configured.

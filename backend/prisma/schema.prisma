@@ -134,6 +134,7 @@ model Lesson {
   subtitle    String?
   kind        String   @default("LESSON")
   xpBonus     Int      @default(10)
+  guide       Json?
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

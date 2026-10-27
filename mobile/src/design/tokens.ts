@@ -12,6 +12,10 @@ export const colors = {
   sky: '#e7f0fa',
   white: '#ffffff',
   blueDark: '#147da6',
+  // welcome/intro screen surfaces from the reference design
+  appBg: '#fbf8ef',
+  textLight: '#325f77',
+  sand: '#f1e8d7',
   // existing action/feedback colors (kept for the rest of the app)
   coral: '#f06b55',
   gold: '#f4b83f',
@@ -59,7 +63,7 @@ export const fonts = {
   bodyBold: 'DMSans_700Bold',
   display: 'Nunito_800ExtraBold',
   displayBlack: 'Nunito_900Black',
-  displayCaveat: 'Caveat_600',
+  displayCaveat: 'Caveat_600SemiBold',
 } as const
 
 const shadowBase = Platform.select<ViewStyle>({

@@ -82,12 +82,30 @@ export type ExerciseDto = {
   position: number
 }
 
+export type LessonGuideRow = {
+  setswana: string
+  pronunciation: string | null
+  english: string
+  sample: string | null
+}
+
+export type LessonGuideSection = {
+  heading: string
+  rows: LessonGuideRow[]
+}
+
+export type LessonGuide = {
+  sections: LessonGuideSection[]
+  tips: { heading: string; items: string[] } | null
+}
+
 export type LessonDto = {
   id: string
   slug: string
   title: string
   subtitle: string | null
   xpBonus: number
+  guide: LessonGuide | null
   unit: { id: string; title: string; colour: string }
   exercises: ExerciseDto[]
 }

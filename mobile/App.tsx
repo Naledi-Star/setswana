@@ -7,6 +7,7 @@ import {
   useFonts as useNunito,
 } from '@expo-google-fonts/nunito'
 import { DMSans_400Regular, DMSans_500Medium, DMSans_700Bold, useFonts as useDMSans } from '@expo-google-fonts/dm-sans'
+import { Caveat_600SemiBold, useFonts as useCaveat } from '@expo-google-fonts/caveat'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { AuthProvider } from './src/auth/AuthProvider'
@@ -27,7 +28,8 @@ const queryClient = new QueryClient({
 export default function App() {
   const [nunitoLoaded] = useNunito({ Nunito_800ExtraBold, Nunito_900Black })
   const [dmLoaded] = useDMSans({ DMSans_400Regular, DMSans_500Medium, DMSans_700Bold })
-  const fontsReady = nunitoLoaded && dmLoaded
+  const [caveatLoaded] = useCaveat({ Caveat_600SemiBold })
+  const fontsReady = nunitoLoaded && dmLoaded && caveatLoaded
 
   useEffect(() => {
     if (fontsReady) void SplashScreen.hideAsync()

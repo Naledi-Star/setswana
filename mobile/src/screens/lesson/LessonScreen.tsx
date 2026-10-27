@@ -304,7 +304,7 @@ export function LessonScreen({ lessonId, onExit, onComplete, onReviewWords }: Pr
         <Text style={styles.counter}>
           Question {index + 1} of {total}
         </Text>
-        <Text style={styles.title}>{exerciseTitle(exercise.type)}</Text>
+        <Text style={styles.title}>{exerciseTitle(exercise.type, exercise.prompt)}</Text>
 
         <View key={`${exercise.id}-${retryKey}`}>
           <ExerciseRenderer exercise={exercise} disabled={Boolean(feedback) || submitting} onAnswer={submit} />
@@ -314,7 +314,7 @@ export function LessonScreen({ lessonId, onExit, onComplete, onReviewWords }: Pr
   )
 }
 
-function exerciseTitle(exerciseType: string): string {
+function exerciseTitle(exerciseType: string, prompt?: Record<string, unknown>): string {
   switch (exerciseType) {
     case 'TRANSLATE_MC':
       return 'Translate this phrase'
@@ -325,7 +325,7 @@ function exerciseTitle(exerciseType: string): string {
     case 'LISTEN_CHOOSE':
       return 'Listen and choose'
     case 'TYPE_ANSWER':
-      return 'Type the answer'
+      return prompt?.listenFirst === true ? 'Listen and write' : 'Type the answer'
     case 'BUILD_SENTENCE':
       return 'Build the sentence'
     case 'SPEAK':
