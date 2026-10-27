@@ -1,18 +1,18 @@
 const FALLBACK_TIMEZONE = 'Africa/Gaborone'
 
-const SETSWANA_WEEKDAYS = ['Sontaga', 'Mosupologo', 'Labobedi', 'Laboraro', 'Labone', 'Labotlhano', 'Matlhatso']
+const SETSWANA_WEEKDAYS = ['Tshipi', 'Mosupologo', 'Labobedi', 'Laboraro', 'Labone', 'Labotlhano', 'Matlhatso']
 
 const SETSWANA_MONTHS = [
-  'Ferikgong',
+  'Hirikgong',
   'Tlhakole',
-  'Mopitlwe',
+  'Mopitlo',
   'Moranang',
   'Motsheganong',
   'Seetebosigo',
   'Phukwi',
   'Phatwe',
   'Lwetse',
-  'Diphalane',
+  'Phalane',
   'Ngwanatsele',
   'Sedimonthole',
 ]

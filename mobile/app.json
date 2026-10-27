@@ -3,6 +3,7 @@
     "name": "Puo",
     "slug": "puo",
     "version": "1.0.0",
+    "owner": "naledistar",
     "scheme": "puo",
     "orientation": "default",
     "icon": "./assets/logo.png",
@@ -27,7 +28,13 @@
         "backgroundColor": "#fffdf7"
       },
       "edgeToEdgeEnabled": true,
-      "permissions": ["RECORD_AUDIO"]
+      "permissions": [
+        "RECORD_AUDIO",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ]
     },
     "plugins": [
       "expo-secure-store",
@@ -46,7 +53,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": ""
+        "projectId": "e23646b1-e879-426a-8339-83cf7a0bd41d"
       }
     }
   }

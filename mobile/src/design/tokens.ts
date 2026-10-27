@@ -5,14 +5,18 @@ export const colors = {
   muted: '#75858d',
   paper: '#fffdf7',
   cream: '#f4f1e7',
-  blue: '#25a8d8',
+  // betterDesign palette
+  navy: '#082f52',
+  blue: '#0e547a',
+  orange: '#d6532d',
+  sky: '#e7f0fa',
+  white: '#ffffff',
   blueDark: '#147da6',
+  // existing action/feedback colors (kept for the rest of the app)
   coral: '#f06b55',
   gold: '#f4b83f',
   green: '#42a879',
-  navy: '#132b39',
   line: '#e5e7e1',
-  white: '#ffffff',
   infoTint: '#e3f4fb',
   errorTint: '#fff0ed',
   errorText: '#b44b39',
@@ -22,12 +26,12 @@ export const colors = {
   successFooter: '#dcf2e7',
   streakTint: '#fff0dc',
   streakText: '#dc7628',
-  goldTint: '#fff2cc',
-  goldText: '#cf8e14',
   softLine: '#d8dedd',
   disabled: '#b8c2c0',
   disabledShadow: '#939e9c',
   navInactive: '#89959a',
+  goldText: '#cf8e14',
+  goldTint: '#fff2cc',
 } as const
 
 export const spacing = {
@@ -55,6 +59,7 @@ export const fonts = {
   bodyBold: 'DMSans_700Bold',
   display: 'Nunito_800ExtraBold',
   displayBlack: 'Nunito_900Black',
+  displayCaveat: 'Caveat_600',
 } as const
 
 const shadowBase = Platform.select<ViewStyle>({
@@ -137,7 +142,20 @@ export const type = {
     letterSpacing: -0.2,
     lineHeight: 20,
   } satisfies TextStyle,
-}
+  headline: {
+    fontFamily: fonts.displayCaveat,
+    fontSize: 28,
+    letterSpacing: -0.6,
+    lineHeight: 32,
+  } satisfies TextStyle,
+  eyebrow: {
+    fontFamily: fonts.displayCaveat,
+    fontSize: 12,
+    letterSpacing: 0.6,
+    lineHeight: 15,
+    textTransform: 'uppercase',
+  } satisfies TextStyle,
+} satisfies Record<string, TextStyle>
 
 export const layout = {
   maxContentWidth: 620,
