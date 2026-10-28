@@ -37,3 +37,24 @@ export function servableAudioUrl(url: string | null | undefined): string | null 
   if (!url) return null
   return audioUrlExists(url) ? url : null
 }
+
+/** Guide rows follow the same rule as words and exercises: advertise a clip only once it exists. */
+export function servableLessonGuide<T>(guide: T): T {
+  const candidate = guide as unknown as { sections?: unknown } | null
+  if (!candidate || typeof candidate !== 'object' || !Array.isArray(candidate.sections)) return guide
+
+  const sections = candidate.sections.map((section: unknown) => {
+    const row = section as { rows?: unknown }
+    if (!row || typeof row !== 'object' || !Array.isArray(row.rows)) return section
+    return {
+      ...row,
+      rows: row.rows.map((entry: unknown) => {
+        const guideRow = entry as { audioUrl?: string | null }
+        if (!guideRow || typeof guideRow !== 'object') return entry
+        return { ...guideRow, audioUrl: servableAudioUrl(guideRow.audioUrl) }
+      }),
+    }
+  })
+
+  return { ...candidate, sections } as T
+}

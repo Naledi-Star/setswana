@@ -19,6 +19,8 @@ export const lessonGuideSchema = z
                   pronunciation: optionalText,
                   english: nonEmpty,
                   sample: optionalText,
+                  /** Clip of this row, so the learner can hear the phrase while reading. */
+                  audioUrl: optionalText,
                 })
                 .strict(),
             ),
@@ -316,6 +318,17 @@ export function validateUnitContent(
 
     if (lesson.exercises.length < 3 || lesson.exercises.length > 12) {
       issues.push({ path, message: 'A lesson needs 3–12 exercises.', severity: 'error' })
+    }
+
+    for (const [sectionIndex, section] of (lesson.guide?.sections ?? []).entries()) {
+      for (const [rowIndex, row] of section.rows.entries()) {
+        if (!row.audioUrl || !audioOpts.audioExists || audioOpts.audioExists(row.audioUrl)) continue
+        issues.push({
+          path: `${path}.guide.sections[${sectionIndex}].rows[${rowIndex}]`,
+          message: `Recording not found: ${row.audioUrl}. Record it and drop the file in content/audio/.`,
+          severity: audioOpts.audioPending ? 'warning' : 'error',
+        })
+      }
     }
 
     const exerciseSlugs = new Set<string>()

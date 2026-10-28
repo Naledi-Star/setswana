@@ -8,7 +8,15 @@ import { audioUrlExists, contentDir } from '../src/lib/media.js'
 
 const prisma = new PrismaClient()
 
-type Counts = { units: number; lessons: number; words: number; exercises: number; skipped: number }
+type Counts = {
+  units: number
+  lessons: number
+  words: number
+  exercises: number
+  removedLessons: number
+  retiredLessons: number
+  skipped: number
+}
 
 async function loadUnits(): Promise<{ unit: UnitContent; file: string }[]> {
   const dir = path.join(contentDir, 'units')
@@ -24,7 +32,15 @@ async function loadUnits(): Promise<{ unit: UnitContent; file: string }[]> {
 }
 
 export async function seedContent(client: PrismaClient = prisma): Promise<Counts> {
-  const counts: Counts = { units: 0, lessons: 0, words: 0, exercises: 0, skipped: 0 }
+  const counts: Counts = {
+    units: 0,
+    lessons: 0,
+    words: 0,
+    exercises: 0,
+    removedLessons: 0,
+    retiredLessons: 0,
+    skipped: 0,
+  }
   const units = await loadUnits()
 
   const seenUnitSlugs = new Set<string>()
@@ -160,6 +176,24 @@ export async function seedContent(client: PrismaClient = prisma): Promise<Counts
         }
       }
     }
+
+    // Content is the single source of truth. A lesson dropped from the unit file is removed,
+    // unless a learner has already attempted it — their history is never deleted by a seed.
+    const staleLessons = await client.lesson.findMany({
+      where: { unitId: unitRow.id, slug: { notIn: unit.lessons.map((entry) => entry.slug) } },
+      include: { _count: { select: { attempts: true } } },
+    })
+
+    for (const stale of staleLessons) {
+      if (stale._count.attempts > 0) {
+        // Attempts are learner history, so the row stays; unpublishing takes it off the path.
+        await client.lesson.update({ where: { id: stale.id }, data: { isPublished: false } })
+        counts.retiredLessons += 1
+        continue
+      }
+      await client.lesson.delete({ where: { id: stale.id } })
+      counts.removedLessons += 1
+    }
   }
 
   const config = await client.appConfig.findUnique({ where: { id: 1 } })
@@ -176,7 +210,7 @@ async function main() {
   const counts = await seedContent()
   // eslint-disable-next-line no-console
   console.log(
-    `Seeded ${counts.units} unit(s), ${counts.lessons} lesson(s), ${counts.words} word(s), ${counts.exercises} exercise(s).`,
+    `Seeded ${counts.units} unit(s), ${counts.lessons} lesson(s), ${counts.words} word(s), ${counts.exercises} exercise(s); dropped ${counts.removedLessons} lesson(s) no longer in the content file, retired ${counts.retiredLessons} that still have learner history.`,
   )
 }
 

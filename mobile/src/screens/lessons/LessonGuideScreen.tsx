@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useQuery } from '@tanstack/react-query'
 import { api, ApiError } from '../../api/client'
 import type { LessonGuide } from '../../api/types'
+import { AudioButton } from '../../components/AudioButton'
 import {
   Button,
   Card,
@@ -74,7 +75,18 @@ export function LessonGuideScreen({ route, navigation }: LessonsScreenProps<'Les
                     ) : null}
                   </View>
                   <Text style={styles.english}>{row.english}</Text>
-                  {row.sample ? <Text style={styles.sample}>Say it: {row.sample}</Text> : null}
+                  {row.sample || row.audioUrl ? (
+                    <View style={styles.rowActions}>
+                      {row.sample ? <Text style={styles.sample}>Say it: {row.sample}</Text> : null}
+                      {row.audioUrl ? (
+                        <AudioButton
+                          audioUrl={row.audioUrl}
+                          variant="inline"
+                          label={`Hear ${row.setswana}`}
+                        />
+                      ) : null}
+                    </View>
+                  ) : null}
                 </View>
               ))}
             </Card>
@@ -131,6 +143,13 @@ const styles = StyleSheet.create({
   },
   pronunciation: { fontFamily: fonts.body, fontSize: 13, color: colors.muted },
   english: { fontFamily: fonts.bodyMedium, fontSize: 15, color: colors.ink, marginTop: 2 },
+  rowActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+    marginTop: 6,
+  },
   sample: {
     fontFamily: fonts.body,
     fontSize: 13,

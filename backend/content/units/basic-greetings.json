@@ -2,23 +2,41 @@
   "slug": "basic-greetings",
   "title": "Basic Greetings and Expressions",
   "titleEn": "Basic Greetings and Expressions",
-  "description": "Greet one person or a whole room, ask how someone is, thank them and say goodbye — with the respectful forms for Rra and Mma.",
+  "description": "Nine short section lessons build the greetings one step at a time — Dumela, Dumelang, Le kae?, Ke teng, thank you, goodbye and the polite forms — with a review after every three sections and cultural tips at the end.",
   "colour": "blue",
   "audioPending": true,
   "words": [
     {
       "slug": "dumela",
       "setswana": "Dumela",
-      "audioUrl": "/media/dumela.mp3",
+      "audioUrl": "/media/dumela.m4a",
       "english": "Hello (to one person)",
       "notes": "The everyday greeting to one person.",
       "phonetic": "doo-meh-lah",
       "partOfSpeech": "interjection"
     },
     {
+      "slug": "rra",
+      "setswana": "Rra",
+      "audioUrl": "/media/rra.mp3",
+      "english": "Sir",
+      "notes": "The respectful title for a man. Add it to the greeting: Dumela Rra.",
+      "phonetic": "rrah",
+      "partOfSpeech": "noun"
+    },
+    {
+      "slug": "mma",
+      "setswana": "Mma",
+      "audioUrl": "/media/mma.mp3",
+      "english": "Madam / Mrs",
+      "notes": "The respectful title for a woman — also the word for mother. Add it to the greeting: Dumela Mma.",
+      "phonetic": "mmah",
+      "partOfSpeech": "noun"
+    },
+    {
       "slug": "dumela-rra",
       "setswana": "Dumela Rra",
-      "audioUrl": "/media/dumela-rra.mp3",
+      "audioUrl": "/media/dumela-rra.m4a",
       "english": "Hello Sir",
       "notes": "Add Rra (Sir) when greeting a man respectfully.",
       "phonetic": "doo-meh-lah rrah",
@@ -27,7 +45,7 @@
     {
       "slug": "dumela-mma",
       "setswana": "Dumela Mma",
-      "audioUrl": "/media/dumela-mma.mp3",
+      "audioUrl": "/media/dumela-mma.m4a",
       "english": "Hello Madam",
       "notes": "Add Mma (Ma'am/Mrs) when greeting a woman respectfully.",
       "phonetic": "doo-meh-lah mmah",
@@ -47,6 +65,7 @@
       "setswana": "Dumelang BoMma",
       "audioUrl": "/media/dumelang-bomma.mp3",
       "english": "Hello Ladies",
+      "notes": "BoMma is the plural of Mma — the respectful way to address a group of women.",
       "phonetic": "doo-meh-lahng boh-mmah",
       "partOfSpeech": "phrase"
     },
@@ -55,6 +74,7 @@
       "setswana": "Dumelang BoRra",
       "audioUrl": "/media/dumelang-borra.mp3",
       "english": "Hello Gentlemen",
+      "notes": "BoRra is the plural of Rra — the respectful way to address a group of men.",
       "phonetic": "doo-meh-lahng boh-rrah",
       "partOfSpeech": "phrase"
     },
@@ -63,6 +83,7 @@
       "setswana": "Dumelang BoMma le BoRra",
       "audioUrl": "/media/dumelang-bomma-le-borra.mp3",
       "english": "Hello Ladies and Gentlemen",
+      "notes": "Le means 'and', so this greets a mixed group.",
       "phonetic": "doo-meh-lahng boh mma leh boh rrah",
       "partOfSpeech": "phrase"
     },
@@ -116,6 +137,7 @@
       "setswana": "Ke tsogile sentle",
       "audioUrl": "/media/ke-tsogile-sentle.mp3",
       "english": "I woke up well / I am fine",
+      "notes": "The reply to O tsogile jang?",
       "phonetic": "keh tsoh-ghee-leh sen-tleh",
       "partOfSpeech": "phrase"
     },
@@ -124,6 +146,7 @@
       "setswana": "Re tsogile sentle",
       "audioUrl": "/media/re-tsogile-sentle.mp3",
       "english": "We woke up well / We're fine",
+      "notes": "The reply to Le tsogile jang?",
       "phonetic": "reh tsoh-ghee-leh sen-tleh",
       "partOfSpeech": "phrase"
     },
@@ -141,6 +164,7 @@
       "setswana": "Re a leboga",
       "audioUrl": "/media/re-a-leboga.mp3",
       "english": "We thank you",
+      "notes": "Thank you from a group.",
       "phonetic": "reh ah leh-boh-gah",
       "partOfSpeech": "phrase"
     },
@@ -158,6 +182,7 @@
       "setswana": "Tsamayang sentle",
       "audioUrl": "/media/tsamayang-sentle.mp3",
       "english": "Go well (plural)",
+      "notes": "Said to a group that is leaving.",
       "phonetic": "tsah-mah-yahng sen-tleh",
       "partOfSpeech": "phrase"
     },
@@ -175,6 +200,7 @@
       "setswana": "Salang sentle",
       "audioUrl": "/media/salang-sentle.mp3",
       "english": "Stay well (plural)",
+      "notes": "Said by the person leaving, to a group staying behind.",
       "phonetic": "sah-lahng sen-tleh",
       "partOfSpeech": "phrase"
     },
@@ -199,78 +225,1598 @@
   ],
   "lessons": [
     {
-      "slug": "basic-greetings-lesson-1",
-      "title": "Basic Greetings and Expressions",
-      "subtitle": "Hello, how are you, thank you and goodbye",
+      "slug": "basic-greetings-section-1",
+      "title": "Basic Greetings (Singular)",
+      "subtitle": "Dumela, Rra and Mma — greeting one person",
       "kind": "LESSON",
-      "xpBonus": 10,
       "guide": {
         "sections": [
           {
             "heading": "1. Basic Greetings (Singular)",
             "rows": [
-              { "setswana": "Dumela", "pronunciation": "doo-meh-lah", "english": "Hello (to one person)", "sample": "Dumela!" },
-              { "setswana": "Dumela Rra", "pronunciation": "doo-meh-lah rrah", "english": "Hello Sir", "sample": "Dumela Rra" },
-              { "setswana": "Dumela Mma", "pronunciation": "doo-meh-lah mmah", "english": "Hello Madam", "sample": "Dumela Mma" }
+              {
+                "setswana": "Dumela",
+                "pronunciation": "doo-meh-lah",
+                "english": "Hello (to one person)",
+                "sample": "Dumela!",
+                "audioUrl": "/media/dumela.m4a"
+              },
+              {
+                "setswana": "Rra",
+                "pronunciation": "rrah",
+                "english": "Sir",
+                "sample": "Dumela Rra",
+                "audioUrl": "/media/rra.mp3"
+              },
+              {
+                "setswana": "Mma",
+                "pronunciation": "mmah",
+                "english": "Madam / Mrs",
+                "sample": "Dumela Mma",
+                "audioUrl": "/media/mma.mp3"
+              },
+              {
+                "setswana": "Dumela Rra",
+                "pronunciation": "doo-meh-lah rrah",
+                "english": "Hello Sir",
+                "sample": "Dumela Rra",
+                "audioUrl": "/media/dumela-rra.m4a"
+              },
+              {
+                "setswana": "Dumela Mma",
+                "pronunciation": "doo-meh-lah mmah",
+                "english": "Hello Madam",
+                "sample": "Dumela Mma",
+                "audioUrl": "/media/dumela-mma.m4a"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s1-listen-dumela",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/dumela.m4a",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "one-person", "text": "Hello (to one person)" },
+              { "id": "group", "text": "Hello (to a group)" },
+              { "id": "thanks", "text": "Thank you" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "one-person" },
+          "explanation": "Dumela greets one person. For a group you say Dumelang.",
+          "words": ["dumela", "dumelang"]
+        },
+        {
+          "slug": "s1-quiz-dumela-rra",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Dumela Rra",
+            "phonetic": "doo-meh-lah rrah",
+            "options": [
+              { "id": "hello-sir", "text": "Hello Sir" },
+              { "id": "hello-madam", "text": "Hello Madam" },
+              { "id": "hello-all", "text": "Hello everyone" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "hello-sir" },
+          "explanation": "Rra means Sir, so Dumela Rra greets a man with respect.",
+          "words": ["dumela-rra", "rra"]
+        },
+        {
+          "slug": "s1-match-titles",
+          "type": "MATCH_PAIRS",
+          "prompt": {
+            "pairs": [
+              { "id": "p1", "setswana": "Dumela", "english": "Hello (to one person)" },
+              { "id": "p2", "setswana": "Rra", "english": "Sir" },
+              { "id": "p3", "setswana": "Mma", "english": "Madam / Mrs" },
+              { "id": "p4", "setswana": "Dumela Rra", "english": "Hello Sir" },
+              { "id": "p5", "setswana": "Dumela Mma", "english": "Hello Madam" }
+            ]
+          },
+          "answerKey": {
+            "pairs": [
+              { "id": "p1", "setswana": "Dumela", "english": "Hello (to one person)" },
+              { "id": "p2", "setswana": "Rra", "english": "Sir" },
+              { "id": "p3", "setswana": "Mma", "english": "Madam / Mrs" },
+              { "id": "p4", "setswana": "Dumela Rra", "english": "Hello Sir" },
+              { "id": "p5", "setswana": "Dumela Mma", "english": "Hello Madam" }
+            ]
+          },
+          "explanation": "Rra and Mma turn a plain Dumela into a respectful greeting.",
+          "words": ["dumela", "rra", "mma", "dumela-rra", "dumela-mma"]
+        },
+        {
+          "slug": "s1-fill-madam",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Dumela ___",
+            "translationHint": "Hello Madam",
+            "blankCount": 1,
+            "wordBank": ["Mma", "Rra", "BoMma"]
+          },
+          "answerKey": { "answers": ["Mma"], "acceptAlternates": ["Mma"], "allowTypo": false },
+          "explanation": "Add Mma when you greet a woman respectfully.",
+          "words": ["dumela-mma", "mma"]
+        },
+        {
+          "slug": "s1-speak-dumela-rra",
+          "type": "SPEAK",
+          "audioUrl": "/media/dumela-rra.m4a",
+          "prompt": {
+            "phrase": "Dumela Rra",
+            "english": "Hello Sir",
+            "phonetic": "doo-meh-lah rrah"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["dumela-rra", "rra"]
+        },
+        {
+          "slug": "s1-test-hello-madam",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "Hello Madam",
+            "translation": "Dumela Mma",
+            "hintWords": ["Dumela", "Mma"]
+          },
+          "answerKey": {
+            "answers": ["Dumela Mma"],
+            "acceptAlternates": ["Dumela Mma"],
+            "allowTypo": true
+          },
+          "explanation": "Dumela plus Mma is the respectful greeting for a woman.",
+          "words": ["dumela-mma", "mma"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-section-2",
+      "title": "Greetings (Plural / Groups)",
+      "subtitle": "Dumelang and the BoMma / BoRra forms for a group",
+      "kind": "LESSON",
+      "guide": {
+        "sections": [
+          {
+            "heading": "2. Greetings (Plural / Groups)",
+            "rows": [
+              {
+                "setswana": "Dumelang",
+                "pronunciation": "doo-meh-lahng",
+                "english": "Hello (to multiple people)",
+                "sample": "Dumelang!",
+                "audioUrl": "/media/dumelang.mp3"
+              },
+              {
+                "setswana": "Dumelang BoMma",
+                "pronunciation": "doo-meh-lahng boh-mmah",
+                "english": "Hello Ladies",
+                "sample": "Dumelang BoMma",
+                "audioUrl": "/media/dumelang-bomma.mp3"
+              },
+              {
+                "setswana": "Dumelang BoRra",
+                "pronunciation": "doo-meh-lahng boh-rrah",
+                "english": "Hello Gentlemen",
+                "sample": "Dumelang BoRra",
+                "audioUrl": "/media/dumelang-borra.mp3"
+              },
+              {
+                "setswana": "Dumelang BoMma le BoRra",
+                "pronunciation": "doo-meh-lahng boh mma leh boh rrah",
+                "english": "Hello Ladies and Gentlemen",
+                "sample": "Dumelang BoMma le BoRra",
+                "audioUrl": "/media/dumelang-bomma-le-borra.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s2-listen-dumelang",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/dumelang.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "group", "text": "Hello (to a group)" },
+              { "id": "one-person", "text": "Hello (to one person)" },
+              { "id": "thanks", "text": "Thank you" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "group" },
+          "explanation": "The -ng ending makes it plural: Dumelang greets more than one person.",
+          "words": ["dumelang", "dumela"]
+        },
+        {
+          "slug": "s2-quiz-bomma",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Dumelang BoMma",
+            "phonetic": "doo-meh-lahng boh-mmah",
+            "options": [
+              { "id": "ladies", "text": "Hello Ladies" },
+              { "id": "gentlemen", "text": "Hello Gentlemen" },
+              { "id": "everyone", "text": "Hello Ladies and Gentlemen" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "ladies" },
+          "explanation": "BoMma is the plural of Mma, so this greets a group of women.",
+          "words": ["dumelang-bomma", "mma"]
+        },
+        {
+          "slug": "s2-match-groups",
+          "type": "MATCH_PAIRS",
+          "prompt": {
+            "pairs": [
+              { "id": "p1", "setswana": "Dumelang", "english": "Hello (to a group)" },
+              { "id": "p2", "setswana": "Dumelang BoMma", "english": "Hello Ladies" },
+              { "id": "p3", "setswana": "Dumelang BoRra", "english": "Hello Gentlemen" },
+              {
+                "id": "p4",
+                "setswana": "Dumelang BoMma le BoRra",
+                "english": "Hello Ladies and Gentlemen"
+              }
+            ]
+          },
+          "answerKey": {
+            "pairs": [
+              { "id": "p1", "setswana": "Dumelang", "english": "Hello (to a group)" },
+              { "id": "p2", "setswana": "Dumelang BoMma", "english": "Hello Ladies" },
+              { "id": "p3", "setswana": "Dumelang BoRra", "english": "Hello Gentlemen" },
+              {
+                "id": "p4",
+                "setswana": "Dumelang BoMma le BoRra",
+                "english": "Hello Ladies and Gentlemen"
+              }
+            ]
+          },
+          "explanation": "BoMma for women, BoRra for men, and le to join them.",
+          "words": [
+            "dumelang",
+            "dumelang-bomma",
+            "dumelang-borra",
+            "dumelang-bomma-le-borra"
+          ]
+        },
+        {
+          "slug": "s2-fill-gentlemen",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Dumelang ___",
+            "translationHint": "Hello Gentlemen",
+            "blankCount": 1,
+            "wordBank": ["BoRra", "BoMma", "Rra"]
+          },
+          "answerKey": { "answers": ["BoRra"], "acceptAlternates": ["BoRra"], "allowTypo": false },
+          "explanation": "BoRra addresses a group of men.",
+          "words": ["dumelang-borra", "dumelang"]
+        },
+        {
+          "slug": "s2-speak-both",
+          "type": "SPEAK",
+          "audioUrl": "/media/dumelang-bomma-le-borra.mp3",
+          "prompt": {
+            "phrase": "Dumelang BoMma le BoRra",
+            "english": "Hello Ladies and Gentlemen",
+            "phonetic": "doo-meh-lahng boh mma leh boh rrah"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["dumelang-bomma-le-borra"]
+        },
+        {
+          "slug": "s2-test-group",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "Hello Ladies and Gentlemen",
+            "translation": "Dumelang BoMma le BoRra",
+            "hintWords": ["Dumelang", "BoMma", "le", "BoRra"]
+          },
+          "answerKey": {
+            "answers": ["Dumelang BoMma le BoRra"],
+            "acceptAlternates": ["Dumelang BoMma le BoRra"],
+            "allowTypo": true
+          },
+          "explanation": "Dumelang for the group, BoMma and BoRra joined by le.",
+          "words": ["dumelang-bomma-le-borra"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-section-3",
+      "title": "Asking 'How Are You?'",
+      "subtitle": "Le kae? — the question that follows the greeting",
+      "kind": "LESSON",
+      "guide": {
+        "sections": [
+          {
+            "heading": "3. Asking 'How Are You?'",
+            "rows": [
+              {
+                "setswana": "Le kae?",
+                "pronunciation": "leh kah-eh",
+                "english": "How are you? (singular)",
+                "sample": "Le kae?",
+                "audioUrl": "/media/le-kae.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s3-listen-le-kae",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/le-kae.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "how", "text": "How are you?" },
+              { "id": "fine", "text": "I am fine" },
+              { "id": "thanks", "text": "Thank you" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "how" },
+          "explanation": "Le kae? is how you ask one person how they are.",
+          "words": ["le-kae"]
+        },
+        {
+          "slug": "s3-quiz-le-kae",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Le kae?",
+            "phonetic": "leh kah-eh",
+            "options": [
+              { "id": "how", "text": "How are you?" },
+              { "id": "going", "text": "Where are you going?" },
+              { "id": "goodbye", "text": "Goodbye" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "how" },
+          "explanation": "Greet first, then ask Le kae? to show you care.",
+          "words": ["le-kae"]
+        },
+        {
+          "slug": "s3-fill-kae",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Le ___?",
+            "translationHint": "How are you?",
+            "blankCount": 1,
+            "wordBank": ["kae", "teng", "sentle"]
+          },
+          "answerKey": { "answers": ["kae"], "acceptAlternates": ["kae"], "allowTypo": false },
+          "explanation": "Le kae? — the whole question is only two words.",
+          "words": ["le-kae"]
+        },
+        {
+          "slug": "s3-speak-le-kae",
+          "type": "SPEAK",
+          "audioUrl": "/media/le-kae.mp3",
+          "prompt": {
+            "phrase": "Le kae?",
+            "english": "How are you?",
+            "phonetic": "leh kah-eh"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["le-kae"]
+        },
+        {
+          "slug": "s3-test-how-are-you",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "How are you? (to one person)",
+            "translation": "Le kae?",
+            "hintWords": ["Le", "kae"]
+          },
+          "answerKey": { "answers": ["Le kae"], "acceptAlternates": ["Le kae?"], "allowTypo": true },
+          "explanation": "Le kae? asks one person how they are.",
+          "words": ["le-kae"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-review-1",
+      "title": "Review 1: Sections 1-3",
+      "subtitle": "Greetings, groups and Le kae? put together",
+      "kind": "PRACTICE",
+      "guide": {
+        "sections": [
+          {
+            "heading": "1. Basic Greetings (Singular)",
+            "rows": [
+              {
+                "setswana": "Dumela",
+                "pronunciation": "doo-meh-lah",
+                "english": "Hello (to one person)",
+                "sample": "Dumela!",
+                "audioUrl": "/media/dumela.m4a"
+              },
+              {
+                "setswana": "Rra",
+                "pronunciation": "rrah",
+                "english": "Sir",
+                "sample": "Dumela Rra",
+                "audioUrl": "/media/rra.mp3"
+              },
+              {
+                "setswana": "Mma",
+                "pronunciation": "mmah",
+                "english": "Madam / Mrs",
+                "sample": "Dumela Mma",
+                "audioUrl": "/media/mma.mp3"
+              },
+              {
+                "setswana": "Dumela Rra",
+                "pronunciation": "doo-meh-lah rrah",
+                "english": "Hello Sir",
+                "sample": "Dumela Rra",
+                "audioUrl": "/media/dumela-rra.m4a"
+              },
+              {
+                "setswana": "Dumela Mma",
+                "pronunciation": "doo-meh-lah mmah",
+                "english": "Hello Madam",
+                "sample": "Dumela Mma",
+                "audioUrl": "/media/dumela-mma.m4a"
+              }
             ]
           },
           {
             "heading": "2. Greetings (Plural / Groups)",
             "rows": [
-              { "setswana": "Dumelang", "pronunciation": "doo-meh-lahng", "english": "Hello (to multiple people)", "sample": "Dumelang!" },
-              { "setswana": "Dumelang BoMma", "pronunciation": "doo-meh-lahng boh-mmah", "english": "Hello Ladies", "sample": "Dumelang BoMma" },
-              { "setswana": "Dumelang BoRra", "pronunciation": "doo-meh-lahng boh-rrah", "english": "Hello Gentlemen", "sample": "Dumelang BoRra" },
-              { "setswana": "Dumelang BoMma le BoRra", "pronunciation": "doo-meh-lahng boh mma leh boh rrah", "english": "Hello Ladies and Gentlemen", "sample": "Dumelang BoMma le BoRra" }
+              {
+                "setswana": "Dumelang",
+                "pronunciation": "doo-meh-lahng",
+                "english": "Hello (to multiple people)",
+                "sample": "Dumelang!",
+                "audioUrl": "/media/dumelang.mp3"
+              },
+              {
+                "setswana": "Dumelang BoMma",
+                "pronunciation": "doo-meh-lahng boh-mmah",
+                "english": "Hello Ladies",
+                "sample": "Dumelang BoMma",
+                "audioUrl": "/media/dumelang-bomma.mp3"
+              },
+              {
+                "setswana": "Dumelang BoRra",
+                "pronunciation": "doo-meh-lahng boh-rrah",
+                "english": "Hello Gentlemen",
+                "sample": "Dumelang BoRra",
+                "audioUrl": "/media/dumelang-borra.mp3"
+              },
+              {
+                "setswana": "Dumelang BoMma le BoRra",
+                "pronunciation": "doo-meh-lahng boh mma leh boh rrah",
+                "english": "Hello Ladies and Gentlemen",
+                "sample": "Dumelang BoMma le BoRra",
+                "audioUrl": "/media/dumelang-bomma-le-borra.mp3"
+              }
             ]
           },
           {
             "heading": "3. Asking 'How Are You?'",
             "rows": [
-              { "setswana": "Le kae?", "pronunciation": "leh kah-eh", "english": "How are you? (singular)", "sample": "Le kae?" }
+              {
+                "setswana": "Le kae?",
+                "pronunciation": "leh kah-eh",
+                "english": "How are you? (singular)",
+                "sample": "Le kae?",
+                "audioUrl": "/media/le-kae.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "r1-match-greetings",
+          "type": "MATCH_PAIRS",
+          "prompt": {
+            "pairs": [
+              { "id": "p1", "setswana": "Dumela", "english": "Hello (to one person)" },
+              { "id": "p2", "setswana": "Dumela Rra", "english": "Hello Sir" },
+              { "id": "p3", "setswana": "Dumelang", "english": "Hello (to a group)" },
+              { "id": "p4", "setswana": "Dumelang BoRra", "english": "Hello Gentlemen" },
+              { "id": "p5", "setswana": "Le kae?", "english": "How are you?" }
             ]
           },
+          "answerKey": {
+            "pairs": [
+              { "id": "p1", "setswana": "Dumela", "english": "Hello (to one person)" },
+              { "id": "p2", "setswana": "Dumela Rra", "english": "Hello Sir" },
+              { "id": "p3", "setswana": "Dumelang", "english": "Hello (to a group)" },
+              { "id": "p4", "setswana": "Dumelang BoRra", "english": "Hello Gentlemen" },
+              { "id": "p5", "setswana": "Le kae?", "english": "How are you?" }
+            ]
+          },
+          "explanation": "One person, a man, a group, gentlemen and the question that follows.",
+          "words": ["dumela", "dumela-rra", "dumelang", "dumelang-borra", "le-kae"]
+        },
+        {
+          "slug": "r1-quiz-madam",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Dumela Mma",
+            "phonetic": "doo-meh-lah mmah",
+            "options": [
+              { "id": "madam", "text": "Hello Madam" },
+              { "id": "sir", "text": "Hello Sir" },
+              { "id": "ladies", "text": "Hello Ladies" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "madam" },
+          "explanation": "Mma is one woman, BoMma is a group of women.",
+          "words": ["dumela-mma", "mma"]
+        },
+        {
+          "slug": "r1-quiz-dumelang",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "en-tn",
+            "phrase": "Hello (to a group)",
+            "options": [
+              { "id": "dumelang", "text": "Dumelang" },
+              { "id": "dumela", "text": "Dumela" },
+              { "id": "ke-teng", "text": "Ke teng" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "dumelang" },
+          "explanation": "The -ng ending points at a group.",
+          "words": ["dumelang", "dumela"]
+        },
+        {
+          "slug": "r1-listen-bomma",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/dumelang-bomma.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "ladies", "text": "Hello Ladies" },
+              { "id": "gentlemen", "text": "Hello Gentlemen" },
+              { "id": "both", "text": "Hello Ladies and Gentlemen" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "ladies" },
+          "explanation": "You heard BoMma, not BoRra.",
+          "words": ["dumelang-bomma", "dumelang-borra"]
+        },
+        {
+          "slug": "r1-fill-bomma",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Dumelang ___ le BoRra",
+            "translationHint": "Hello Ladies and Gentlemen",
+            "blankCount": 1,
+            "wordBank": ["BoMma", "BoRra", "Mma"]
+          },
+          "answerKey": { "answers": ["BoMma"], "acceptAlternates": ["BoMma"], "allowTypo": false },
+          "explanation": "BoMma comes first, then le, then BoRra.",
+          "words": ["dumelang-bomma-le-borra"]
+        },
+        {
+          "slug": "r1-speak-bomma",
+          "type": "SPEAK",
+          "audioUrl": "/media/dumelang-bomma.mp3",
+          "prompt": {
+            "phrase": "Dumelang BoMma",
+            "english": "Hello Ladies",
+            "phonetic": "doo-meh-lahng boh-mmah"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["dumelang-bomma"]
+        },
+        {
+          "slug": "r1-test-how-are-you",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "tn-en",
+            "sourceText": "Le kae?",
+            "translation": "How are you?"
+          },
+          "answerKey": {
+            "answers": ["How are you?"],
+            "acceptAlternates": ["How are you"],
+            "allowTypo": true
+          },
+          "explanation": "Le kae? asks one person how they are.",
+          "words": ["le-kae"]
+        },
+        {
+          "slug": "r1-review-le-kae",
+          "type": "REVIEW_CARD",
+          "prompt": {
+            "setswana": "Le kae?",
+            "english": "How are you?",
+            "notes": "Reply with Ke teng when you are fine."
+          },
+          "answerKey": {},
+          "explanation": "Self-check: did you remember it?",
+          "words": ["le-kae"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-section-4",
+      "title": "Responding to Greetings",
+      "subtitle": "Ke teng and Re teng — I am fine, we are fine",
+      "kind": "LESSON",
+      "guide": {
+        "sections": [
           {
             "heading": "4. Responding to Greetings",
             "rows": [
-              { "setswana": "Ke teng", "pronunciation": "keh teng", "english": "I am fine", "sample": "Ke teng" },
-              { "setswana": "Re teng", "pronunciation": "reh teng", "english": "We are fine", "sample": "Re teng" }
+              {
+                "setswana": "Ke teng",
+                "pronunciation": "keh teng",
+                "english": "I am fine",
+                "sample": "Ke teng",
+                "audioUrl": "/media/ke-teng.mp3"
+              },
+              {
+                "setswana": "Re teng",
+                "pronunciation": "reh teng",
+                "english": "We are fine",
+                "sample": "Re teng",
+                "audioUrl": "/media/re-teng.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s4-listen-ke-teng",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/ke-teng.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "one", "text": "I am fine" },
+              { "id": "we", "text": "We are fine" },
+              { "id": "thanks", "text": "Thank you" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "one" },
+          "explanation": "Ke is 'I', Re is 'we'.",
+          "words": ["ke-teng", "re-teng"]
+        },
+        {
+          "slug": "s4-quiz-re-teng",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Re teng",
+            "phonetic": "reh teng",
+            "options": [
+              { "id": "we", "text": "We are fine" },
+              { "id": "one", "text": "I am fine" },
+              { "id": "woke", "text": "We woke up well" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "we" },
+          "explanation": "Re is the plural 'we', so Re teng answers for a group.",
+          "words": ["re-teng"]
+        },
+        {
+          "slug": "s4-fill-re-teng",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "___ teng",
+            "translationHint": "We are fine",
+            "blankCount": 1,
+            "wordBank": ["Re", "Ke", "Le"]
+          },
+          "answerKey": { "answers": ["Re"], "acceptAlternates": ["Re"], "allowTypo": false },
+          "explanation": "Re teng — we are fine.",
+          "words": ["re-teng"]
+        },
+        {
+          "slug": "s4-speak-ke-teng",
+          "type": "SPEAK",
+          "audioUrl": "/media/ke-teng.mp3",
+          "prompt": {
+            "phrase": "Ke teng",
+            "english": "I am fine",
+            "phonetic": "keh teng"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["ke-teng"]
+        },
+        {
+          "slug": "s4-test-i-am-fine",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "I am fine",
+            "translation": "Ke teng",
+            "hintWords": ["Ke", "teng"]
+          },
+          "answerKey": { "answers": ["Ke teng"], "acceptAlternates": ["Ke teng"], "allowTypo": true },
+          "explanation": "Reply to Le kae? with Ke teng.",
+          "words": ["ke-teng", "le-kae"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-section-5",
+      "title": "Morning Greeting (Well-being)",
+      "subtitle": "O tsogile jang? and Le tsogile jang?",
+      "kind": "LESSON",
+      "guide": {
+        "sections": [
+          {
+            "heading": "5. Morning Greeting (Well-being)",
+            "rows": [
+              {
+                "setswana": "O tsogile jang?",
+                "pronunciation": "oh tsoh-ghee-leh jahng",
+                "english": "How did you wake up? / How are you?",
+                "sample": "O tsogile jang?",
+                "audioUrl": "/media/o-tsogile-jang.mp3"
+              },
+              {
+                "setswana": "Le tsogile jang?",
+                "pronunciation": "leh tsoh-ghee-leh jahng",
+                "english": "How did you wake up? (plural)",
+                "sample": "Le tsogile jang?",
+                "audioUrl": "/media/le-tsogile-jang.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s5-listen-o-tsogile",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/o-tsogile-jang.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "one", "text": "How did you wake up? (to one person)" },
+              { "id": "group", "text": "How did you wake up? (to a group)" },
+              { "id": "fine", "text": "I am fine" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "one" },
+          "explanation": "O is for one person; Le is for a group.",
+          "words": ["o-tsogile-jang", "le-tsogile-jang"]
+        },
+        {
+          "slug": "s5-quiz-le-tsogile",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Le tsogile jang?",
+            "phonetic": "leh tsoh-ghee-leh jahng",
+            "options": [
+              { "id": "group", "text": "How did you wake up? (to a group)" },
+              { "id": "one", "text": "How did you wake up? (to one person)" },
+              { "id": "thanks", "text": "Thank you" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "group" },
+          "explanation": "Le makes the morning greeting plural.",
+          "words": ["le-tsogile-jang"]
+        },
+        {
+          "slug": "s5-fill-jang",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "O tsogile ___?",
+            "translationHint": "How did you wake up?",
+            "blankCount": 1,
+            "wordBank": ["jang", "sentle", "teng"]
+          },
+          "answerKey": { "answers": ["jang"], "acceptAlternates": ["jang"], "allowTypo": false },
+          "explanation": "Jang means 'how'.",
+          "words": ["o-tsogile-jang"]
+        },
+        {
+          "slug": "s5-speak-o-tsogile",
+          "type": "SPEAK",
+          "audioUrl": "/media/o-tsogile-jang.mp3",
+          "prompt": {
+            "phrase": "O tsogile jang?",
+            "english": "How did you wake up?",
+            "phonetic": "oh tsoh-ghee-leh jahng"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["o-tsogile-jang"]
+        },
+        {
+          "slug": "s5-test-le-tsogile",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "How did you wake up? (to a group)",
+            "translation": "Le tsogile jang?",
+            "hintWords": ["Le", "tsogile", "jang"]
+          },
+          "answerKey": {
+            "answers": ["Le tsogile jang"],
+            "acceptAlternates": ["Le tsogile jang?"],
+            "allowTypo": true
+          },
+          "explanation": "Le tsogile jang? is the morning greeting for a group.",
+          "words": ["le-tsogile-jang"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-section-6",
+      "title": "Responding (General Well-being)",
+      "subtitle": "Ke tsogile sentle and Re tsogile sentle",
+      "kind": "LESSON",
+      "guide": {
+        "sections": [
+          {
+            "heading": "6. Responding (General Well-being)",
+            "rows": [
+              {
+                "setswana": "Ke tsogile sentle",
+                "pronunciation": "keh tsoh-ghee-leh sen-tleh",
+                "english": "I woke up well / I am fine",
+                "sample": "Ke tsogile sentle",
+                "audioUrl": "/media/ke-tsogile-sentle.mp3"
+              },
+              {
+                "setswana": "Re tsogile sentle",
+                "pronunciation": "reh tsoh-ghee-leh sen-tleh",
+                "english": "We woke up well / We're fine",
+                "sample": "Re tsogile sentle",
+                "audioUrl": "/media/re-tsogile-sentle.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s6-listen-ke-tsogile",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/ke-tsogile-sentle.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "one", "text": "I woke up well" },
+              { "id": "we", "text": "We woke up well" },
+              { "id": "thanks", "text": "We thank you" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "one" },
+          "explanation": "Ke tsogile sentle — I woke up well.",
+          "words": ["ke-tsogile-sentle", "re-tsogile-sentle"]
+        },
+        {
+          "slug": "s6-quiz-re-tsogile",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Re tsogile sentle",
+            "phonetic": "reh tsoh-ghee-leh sen-tleh",
+            "options": [
+              { "id": "we", "text": "We woke up well" },
+              { "id": "one", "text": "I woke up well" },
+              { "id": "how", "text": "How are you?" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "we" },
+          "explanation": "Re is 'we', so the answer is for a group.",
+          "words": ["re-tsogile-sentle"]
+        },
+        {
+          "slug": "s6-fill-sentle",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Ke tsogile ___",
+            "translationHint": "I woke up well",
+            "blankCount": 1,
+            "wordBank": ["sentle", "teng", "jang"]
+          },
+          "answerKey": { "answers": ["sentle"], "acceptAlternates": ["sentle"], "allowTypo": false },
+          "explanation": "Sentle means well or nicely.",
+          "words": ["ke-tsogile-sentle"]
+        },
+        {
+          "slug": "s6-speak-ke-tsogile",
+          "type": "SPEAK",
+          "audioUrl": "/media/ke-tsogile-sentle.mp3",
+          "prompt": {
+            "phrase": "Ke tsogile sentle",
+            "english": "I woke up well",
+            "phonetic": "keh tsoh-ghee-leh sen-tleh"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["ke-tsogile-sentle"]
+        },
+        {
+          "slug": "s6-test-we-woke-well",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "We woke up well",
+            "translation": "Re tsogile sentle",
+            "hintWords": ["Re", "tsogile", "sentle"]
+          },
+          "answerKey": {
+            "answers": ["Re tsogile sentle"],
+            "acceptAlternates": ["Re tsogile sentle"],
+            "allowTypo": true
+          },
+          "explanation": "Swap Ke for Re to answer for a group.",
+          "words": ["re-tsogile-sentle"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-review-2",
+      "title": "Review 2: Sections 4-6",
+      "subtitle": "How are you, how did you wake up, and every answer",
+      "kind": "PRACTICE",
+      "guide": {
+        "sections": [
+          {
+            "heading": "4. Responding to Greetings",
+            "rows": [
+              {
+                "setswana": "Ke teng",
+                "pronunciation": "keh teng",
+                "english": "I am fine",
+                "sample": "Ke teng",
+                "audioUrl": "/media/ke-teng.mp3"
+              },
+              {
+                "setswana": "Re teng",
+                "pronunciation": "reh teng",
+                "english": "We are fine",
+                "sample": "Re teng",
+                "audioUrl": "/media/re-teng.mp3"
+              }
             ]
           },
           {
             "heading": "5. Morning Greeting (Well-being)",
             "rows": [
-              { "setswana": "O tsogile jang?", "pronunciation": "oh tsoh-ghee-leh jahng", "english": "How did you wake up? / How are you?", "sample": "O tsogile jang?" },
-              { "setswana": "Le tsogile jang?", "pronunciation": "leh tsoh-ghee-leh jahng", "english": "How did you wake up? (plural)", "sample": "Le tsogile jang?" }
+              {
+                "setswana": "O tsogile jang?",
+                "pronunciation": "oh tsoh-ghee-leh jahng",
+                "english": "How did you wake up? / How are you?",
+                "sample": "O tsogile jang?",
+                "audioUrl": "/media/o-tsogile-jang.mp3"
+              },
+              {
+                "setswana": "Le tsogile jang?",
+                "pronunciation": "leh tsoh-ghee-leh jahng",
+                "english": "How did you wake up? (plural)",
+                "sample": "Le tsogile jang?",
+                "audioUrl": "/media/le-tsogile-jang.mp3"
+              }
             ]
           },
           {
             "heading": "6. Responding (General Well-being)",
             "rows": [
-              { "setswana": "Ke tsogile sentle", "pronunciation": "keh tsoh-ghee-leh sen-tleh", "english": "I woke up well / I am fine", "sample": "Ke tsogile sentle" },
-              { "setswana": "Re tsogile sentle", "pronunciation": "reh tsoh-ghee-leh sen-tleh", "english": "We woke up well / We're fine", "sample": "Re tsogile sentle" }
+              {
+                "setswana": "Ke tsogile sentle",
+                "pronunciation": "keh tsoh-ghee-leh sen-tleh",
+                "english": "I woke up well / I am fine",
+                "sample": "Ke tsogile sentle",
+                "audioUrl": "/media/ke-tsogile-sentle.mp3"
+              },
+              {
+                "setswana": "Re tsogile sentle",
+                "pronunciation": "reh tsoh-ghee-leh sen-tleh",
+                "english": "We woke up well / We're fine",
+                "sample": "Re tsogile sentle",
+                "audioUrl": "/media/re-tsogile-sentle.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "r2-match-replies",
+          "type": "MATCH_PAIRS",
+          "prompt": {
+            "pairs": [
+              { "id": "p1", "setswana": "Ke teng", "english": "I am fine" },
+              { "id": "p2", "setswana": "Re teng", "english": "We are fine" },
+              {
+                "id": "p3",
+                "setswana": "O tsogile jang?",
+                "english": "How did you wake up? (to one person)"
+              },
+              { "id": "p4", "setswana": "Ke tsogile sentle", "english": "I woke up well" },
+              { "id": "p5", "setswana": "Re tsogile sentle", "english": "We woke up well" }
             ]
           },
+          "answerKey": {
+            "pairs": [
+              { "id": "p1", "setswana": "Ke teng", "english": "I am fine" },
+              { "id": "p2", "setswana": "Re teng", "english": "We are fine" },
+              {
+                "id": "p3",
+                "setswana": "O tsogile jang?",
+                "english": "How did you wake up? (to one person)"
+              },
+              { "id": "p4", "setswana": "Ke tsogile sentle", "english": "I woke up well" },
+              { "id": "p5", "setswana": "Re tsogile sentle", "english": "We woke up well" }
+            ]
+          },
+          "explanation": "Ke for one person, Re for a group.",
+          "words": ["ke-teng", "re-teng", "o-tsogile-jang", "ke-tsogile-sentle", "re-tsogile-sentle"]
+        },
+        {
+          "slug": "r2-listen-re-teng",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/re-teng.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "we", "text": "We are fine" },
+              { "id": "one", "text": "I am fine" },
+              { "id": "how", "text": "How are you?" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "we" },
+          "explanation": "You heard Re teng, the answer for a group.",
+          "words": ["re-teng", "ke-teng"]
+        },
+        {
+          "slug": "r2-quiz-ke-tsogile",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Ke tsogile sentle",
+            "phonetic": "keh tsoh-ghee-leh sen-tleh",
+            "options": [
+              { "id": "one", "text": "I woke up well" },
+              { "id": "we", "text": "We woke up well" },
+              { "id": "fine", "text": "I am fine" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "one" },
+          "explanation": "Ke tsogile sentle answers O tsogile jang?",
+          "words": ["ke-tsogile-sentle", "o-tsogile-jang"]
+        },
+        {
+          "slug": "r2-fill-teng",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Le kae? — Ke ___",
+            "translationHint": "How are you? — I am fine",
+            "blankCount": 1,
+            "wordBank": ["teng", "sentle", "jang"]
+          },
+          "answerKey": { "answers": ["teng"], "acceptAlternates": ["teng"], "allowTypo": false },
+          "explanation": "Le kae? is answered with Ke teng.",
+          "words": ["ke-teng", "le-kae"]
+        },
+        {
+          "slug": "r2-speak-re-tsogile",
+          "type": "SPEAK",
+          "audioUrl": "/media/re-tsogile-sentle.mp3",
+          "prompt": {
+            "phrase": "Re tsogile sentle",
+            "english": "We woke up well",
+            "phonetic": "reh tsoh-ghee-leh sen-tleh"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["re-tsogile-sentle"]
+        },
+        {
+          "slug": "r2-review-re-teng",
+          "type": "REVIEW_CARD",
+          "prompt": {
+            "setswana": "Re teng",
+            "english": "We are fine",
+            "notes": "Re is the plural 'we' — use it when you answer for a group."
+          },
+          "answerKey": {},
+          "explanation": "Self-check: did you remember it?",
+          "words": ["re-teng"]
+        },
+        {
+          "slug": "r2-test-ke-teng",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "tn-en",
+            "sourceText": "Ke teng",
+            "translation": "I am fine"
+          },
+          "answerKey": {
+            "answers": ["I am fine"],
+            "acceptAlternates": ["I'm fine", "I am well"],
+            "allowTypo": true
+          },
+          "explanation": "Ke teng is the everyday reply to Le kae?",
+          "words": ["ke-teng"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-section-7",
+      "title": "Saying Thank You",
+      "subtitle": "Ke a leboga and Re a leboga",
+      "kind": "LESSON",
+      "guide": {
+        "sections": [
           {
             "heading": "7. Saying Thank You",
             "rows": [
-              { "setswana": "Ke a leboga", "pronunciation": "keh ah leh-boh-gah", "english": "Thank you", "sample": "Ke a leboga" },
-              { "setswana": "Re a leboga", "pronunciation": "reh ah leh-boh-gah", "english": "We thank you", "sample": "Re a leboga" }
+              {
+                "setswana": "Ke a leboga",
+                "pronunciation": "keh ah leh-boh-gah",
+                "english": "Thank you",
+                "sample": "Ke a leboga",
+                "audioUrl": "/media/ke-a-leboga.mp3"
+              },
+              {
+                "setswana": "Re a leboga",
+                "pronunciation": "reh ah leh-boh-gah",
+                "english": "We thank you",
+                "sample": "Re a leboga",
+                "audioUrl": "/media/re-a-leboga.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s7-listen-ke-a-leboga",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/ke-a-leboga.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "thanks", "text": "Thank you" },
+              { "id": "we-thanks", "text": "We thank you" },
+              { "id": "please", "text": "Please / I request" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "thanks" },
+          "explanation": "Ke a leboga — thank you from one person.",
+          "words": ["ke-a-leboga", "re-a-leboga"]
+        },
+        {
+          "slug": "s7-quiz-re-a-leboga",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Re a leboga",
+            "phonetic": "reh ah leh-boh-gah",
+            "options": [
+              { "id": "we", "text": "We thank you" },
+              { "id": "one", "text": "Thank you" },
+              { "id": "fine", "text": "We are fine" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "we" },
+          "explanation": "Re a leboga is thank you from a group.",
+          "words": ["re-a-leboga"]
+        },
+        {
+          "slug": "s7-fill-leboga",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Ke a ___",
+            "translationHint": "Thank you",
+            "blankCount": 1,
+            "wordBank": ["leboga", "kopa", "thusa"]
+          },
+          "answerKey": { "answers": ["leboga"], "acceptAlternates": ["leboga"], "allowTypo": false },
+          "explanation": "Leboga is the verb for thanking.",
+          "words": ["ke-a-leboga"]
+        },
+        {
+          "slug": "s7-speak-ke-a-leboga",
+          "type": "SPEAK",
+          "audioUrl": "/media/ke-a-leboga.mp3",
+          "prompt": {
+            "phrase": "Ke a leboga",
+            "english": "Thank you",
+            "phonetic": "keh ah leh-boh-gah"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["ke-a-leboga"]
+        },
+        {
+          "slug": "s7-test-we-thank-you",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "We thank you",
+            "translation": "Re a leboga",
+            "hintWords": ["Re", "a", "leboga"]
+          },
+          "answerKey": {
+            "answers": ["Re a leboga"],
+            "acceptAlternates": ["Re a leboga"],
+            "allowTypo": true
+          },
+          "explanation": "Change Ke to Re to thank someone on behalf of a group.",
+          "words": ["re-a-leboga"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-section-8",
+      "title": "Saying Goodbye (Polite Expressions)",
+      "subtitle": "Tsamaya sentle, Sala sentle and their plural forms",
+      "kind": "LESSON",
+      "guide": {
+        "sections": [
+          {
+            "heading": "8. Saying Goodbye (Polite Expressions)",
+            "rows": [
+              {
+                "setswana": "Tsamaya sentle",
+                "pronunciation": "tsah-mah-yah sen-tleh",
+                "english": "Go well (said to a person leaving)",
+                "sample": "Tsamaya sentle",
+                "audioUrl": "/media/tsamaya-sentle.mp3"
+              },
+              {
+                "setswana": "Tsamayang sentle",
+                "pronunciation": "tsah-mah-yahng sen-tleh",
+                "english": "Go well (plural)",
+                "sample": "Tsamayang sentle",
+                "audioUrl": "/media/tsamayang-sentle.mp3"
+              },
+              {
+                "setswana": "Sala sentle",
+                "pronunciation": "sah-lah sen-tleh",
+                "english": "Stay well (said by the person leaving)",
+                "sample": "Sala sentle",
+                "audioUrl": "/media/sala-sentle.mp3"
+              },
+              {
+                "setswana": "Salang sentle",
+                "pronunciation": "sah-lahng sen-tleh",
+                "english": "Stay well (plural)",
+                "sample": "Salang sentle",
+                "audioUrl": "/media/salang-sentle.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s8-listen-tsamaya",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/tsamaya-sentle.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "go", "text": "Go well (said to a person leaving)" },
+              { "id": "stay", "text": "Stay well (said by the person leaving)" },
+              { "id": "thanks", "text": "Thank you" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "go" },
+          "explanation": "Tsamaya means go — you say it to the person leaving.",
+          "words": ["tsamaya-sentle", "sala-sentle"]
+        },
+        {
+          "slug": "s8-match-goodbyes",
+          "type": "MATCH_PAIRS",
+          "prompt": {
+            "pairs": [
+              {
+                "id": "p1",
+                "setswana": "Tsamaya sentle",
+                "english": "Go well (said to a person leaving)"
+              },
+              { "id": "p2", "setswana": "Tsamayang sentle", "english": "Go well (plural)" },
+              {
+                "id": "p3",
+                "setswana": "Sala sentle",
+                "english": "Stay well (said by the person leaving)"
+              },
+              { "id": "p4", "setswana": "Salang sentle", "english": "Stay well (plural)" }
+            ]
+          },
+          "answerKey": {
+            "pairs": [
+              {
+                "id": "p1",
+                "setswana": "Tsamaya sentle",
+                "english": "Go well (said to a person leaving)"
+              },
+              { "id": "p2", "setswana": "Tsamayang sentle", "english": "Go well (plural)" },
+              {
+                "id": "p3",
+                "setswana": "Sala sentle",
+                "english": "Stay well (said by the person leaving)"
+              },
+              { "id": "p4", "setswana": "Salang sentle", "english": "Stay well (plural)" }
+            ]
+          },
+          "explanation": "The -ng ending makes both goodbyes plural.",
+          "words": ["tsamaya-sentle", "tsamayang-sentle", "sala-sentle", "salang-sentle"]
+        },
+        {
+          "slug": "s8-fill-sala",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "___ sentle",
+            "translationHint": "Stay well (said by the person leaving)",
+            "blankCount": 1,
+            "wordBank": ["Sala", "Salang", "Tsamaya"]
+          },
+          "answerKey": { "answers": ["Sala"], "acceptAlternates": ["Sala"], "allowTypo": false },
+          "explanation": "Sala sentle — the person leaving says it to the one staying.",
+          "words": ["sala-sentle"]
+        },
+        {
+          "slug": "s8-speak-tsamaya",
+          "type": "SPEAK",
+          "audioUrl": "/media/tsamaya-sentle.mp3",
+          "prompt": {
+            "phrase": "Tsamaya sentle",
+            "english": "Go well",
+            "phonetic": "tsah-mah-yah sen-tleh"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["tsamaya-sentle"]
+        },
+        {
+          "slug": "s8-quiz-salang",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Salang sentle",
+            "phonetic": "sah-lahng sen-tleh",
+            "options": [
+              { "id": "plural", "text": "Stay well (plural)" },
+              { "id": "one", "text": "Stay well (said by the person leaving)" },
+              { "id": "go", "text": "Go well (plural)" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "plural" },
+          "explanation": "Salang is the plural form of Sala.",
+          "words": ["salang-sentle", "sala-sentle"]
+        },
+        {
+          "slug": "s8-test-go-well-group",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "Go well (plural)",
+            "translation": "Tsamayang sentle",
+            "hintWords": ["Tsamayang", "sentle"]
+          },
+          "answerKey": {
+            "answers": ["Tsamayang sentle"],
+            "acceptAlternates": ["Tsamayang sentle"],
+            "allowTypo": true
+          },
+          "explanation": "Tsamayang sentle sends a whole group off well.",
+          "words": ["tsamayang-sentle"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-section-9",
+      "title": "Polite Expressions",
+      "subtitle": "Ke kopa and Tswee tswee",
+      "kind": "LESSON",
+      "guide": {
+        "sections": [
+          {
+            "heading": "9. Polite Expressions",
+            "rows": [
+              {
+                "setswana": "Ke kopa",
+                "pronunciation": "keh koh-pah",
+                "english": "Please / I request",
+                "sample": "Ke kopa metsi",
+                "audioUrl": "/media/ke-kopa.mp3"
+              },
+              {
+                "setswana": "Tswee tswee",
+                "pronunciation": "tswah tswah",
+                "english": "Please (polite/emphasis)",
+                "sample": "Tswee tswee thusa",
+                "audioUrl": "/media/tswee-tswee.mp3"
+              }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "slug": "s9-listen-ke-kopa",
+          "type": "LISTEN_CHOOSE",
+          "audioUrl": "/media/ke-kopa.mp3",
+          "prompt": {
+            "direction": "hear-tn-choose-en",
+            "options": [
+              { "id": "please", "text": "Please / I request" },
+              { "id": "thanks", "text": "Thank you" },
+              { "id": "help", "text": "Please help" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "please" },
+          "explanation": "Ke kopa opens a polite request.",
+          "words": ["ke-kopa"]
+        },
+        {
+          "slug": "s9-quiz-tswee",
+          "type": "TRANSLATE_MC",
+          "prompt": {
+            "direction": "tn-en",
+            "phrase": "Tswee tswee",
+            "phonetic": "tswah tswah",
+            "options": [
+              { "id": "please", "text": "Please (polite/emphasis)" },
+              { "id": "thanks", "text": "Thank you" },
+              { "id": "goodbye", "text": "Go well" }
+            ]
+          },
+          "answerKey": { "correctOptionId": "please" },
+          "explanation": "Tswee tswee adds warmth when you ask for something.",
+          "words": ["tswee-tswee"]
+        },
+        {
+          "slug": "s9-fill-thusa",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Tswee tswee ___",
+            "translationHint": "Please help",
+            "blankCount": 1,
+            "wordBank": ["thusa", "kopa", "leboga"]
+          },
+          "answerKey": { "answers": ["thusa"], "acceptAlternates": ["thusa"], "allowTypo": false },
+          "explanation": "Tswee tswee thusa — please help.",
+          "words": ["tswee-tswee"]
+        },
+        {
+          "slug": "s9-speak-ke-kopa",
+          "type": "SPEAK",
+          "audioUrl": "/media/ke-kopa.mp3",
+          "prompt": {
+            "phrase": "Ke kopa",
+            "english": "Please / I request",
+            "phonetic": "keh koh-pah"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["ke-kopa"]
+        },
+        {
+          "slug": "s9-build-thusa",
+          "type": "BUILD_SENTENCE",
+          "prompt": {
+            "tokens": [
+              { "id": "t3", "text": "thusa" },
+              { "id": "t1", "text": "Tswee" },
+              { "id": "t2", "text": "tswee" }
+            ],
+            "translationHint": "Please help."
+          },
+          "answerKey": { "order": ["t1", "t2", "t3"] },
+          "explanation": "Tswee tswee comes first, then thusa (help).",
+          "words": ["tswee-tswee"]
+        },
+        {
+          "slug": "s9-test-please",
+          "type": "TYPE_ANSWER",
+          "prompt": {
+            "direction": "en-tn",
+            "sourceText": "Please / I request",
+            "translation": "Ke kopa",
+            "hintWords": ["Ke", "kopa"]
+          },
+          "answerKey": { "answers": ["Ke kopa"], "acceptAlternates": ["Ke kopa"], "allowTypo": true },
+          "explanation": "Ke kopa is the everyday polite request.",
+          "words": ["ke-kopa"]
+        }
+      ]
+    },
+    {
+      "slug": "basic-greetings-review-3",
+      "title": "Review 3: Sections 7-9",
+      "subtitle": "Thank you, goodbye and asking politely — with cultural tips",
+      "kind": "PRACTICE",
+      "guide": {
+        "sections": [
+          {
+            "heading": "7. Saying Thank You",
+            "rows": [
+              {
+                "setswana": "Ke a leboga",
+                "pronunciation": "keh ah leh-boh-gah",
+                "english": "Thank you",
+                "sample": "Ke a leboga",
+                "audioUrl": "/media/ke-a-leboga.mp3"
+              },
+              {
+                "setswana": "Re a leboga",
+                "pronunciation": "reh ah leh-boh-gah",
+                "english": "We thank you",
+                "sample": "Re a leboga",
+                "audioUrl": "/media/re-a-leboga.mp3"
+              }
             ]
           },
           {
             "heading": "8. Saying Goodbye (Polite Expressions)",
             "rows": [
-              { "setswana": "Tsamaya sentle", "pronunciation": "tsah-mah-yah sen-tleh", "english": "Go well (said to person leaving)", "sample": "Tsamaya sentle" },
-              { "setswana": "Tsamayang sentle", "pronunciation": "tsah-mah-yahng sen-tleh", "english": "Go well (plural)", "sample": "Tsamayang sentle" },
-              { "setswana": "Sala sentle", "pronunciation": "sah-lah sen-tleh", "english": "Stay well (said by person leaving)", "sample": "Sala sentle" },
-              { "setswana": "Salang sentle", "pronunciation": "sah-lahng sen-tleh", "english": "Stay well (plural)", "sample": "Salang sentle" }
+              {
+                "setswana": "Tsamaya sentle",
+                "pronunciation": "tsah-mah-yah sen-tleh",
+                "english": "Go well (said to a person leaving)",
+                "sample": "Tsamaya sentle",
+                "audioUrl": "/media/tsamaya-sentle.mp3"
+              },
+              {
+                "setswana": "Tsamayang sentle",
+                "pronunciation": "tsah-mah-yahng sen-tleh",
+                "english": "Go well (plural)",
+                "sample": "Tsamayang sentle",
+                "audioUrl": "/media/tsamayang-sentle.mp3"
+              },
+              {
+                "setswana": "Sala sentle",
+                "pronunciation": "sah-lah sen-tleh",
+                "english": "Stay well (said by the person leaving)",
+                "sample": "Sala sentle",
+                "audioUrl": "/media/sala-sentle.mp3"
+              },
+              {
+                "setswana": "Salang sentle",
+                "pronunciation": "sah-lahng sen-tleh",
+                "english": "Stay well (plural)",
+                "sample": "Salang sentle",
+                "audioUrl": "/media/salang-sentle.mp3"
+              }
             ]
           },
           {
             "heading": "9. Polite Expressions",
             "rows": [
-              { "setswana": "Ke kopa", "pronunciation": "keh koh-pah", "english": "Please / I request", "sample": "Ke kopa metsi" },
-              { "setswana": "Tswee tswee", "pronunciation": "tswah tswah", "english": "Please (polite/emphasis)", "sample": "Tswee tswee thusa" }
+              {
+                "setswana": "Ke kopa",
+                "pronunciation": "keh koh-pah",
+                "english": "Please / I request",
+                "sample": "Ke kopa metsi",
+                "audioUrl": "/media/ke-kopa.mp3"
+              },
+              {
+                "setswana": "Tswee tswee",
+                "pronunciation": "tswah tswah",
+                "english": "Please (polite/emphasis)",
+                "sample": "Tswee tswee thusa",
+                "audioUrl": "/media/tswee-tswee.mp3"
+              }
             ]
           }
         ],
@@ -288,103 +1834,133 @@
       },
       "exercises": [
         {
-          "slug": "translate-dumela",
-          "type": "TRANSLATE_MC",
-          "prompt": {
-            "direction": "tn-en",
-            "phrase": "Dumela",
-            "options": [
-              { "id": "hello", "text": "Hello (to one person)" },
-              { "id": "go-well", "text": "Go well" },
-              { "id": "thanks", "text": "Thank you" }
-            ]
-          },
-          "answerKey": { "correctOptionId": "hello" },
-          "explanation": "Dumela is the everyday greeting to one person. For a group, say Dumelang.",
-          "xp": 10,
-          "words": ["dumela", "dumelang"]
-        },
-        {
-          "slug": "match-greetings",
+          "slug": "r3-match-politeness",
           "type": "MATCH_PAIRS",
           "prompt": {
             "pairs": [
-              { "id": "p1", "setswana": "Dumela", "english": "Hello (to one person)" },
-              { "id": "p2", "setswana": "Dumelang", "english": "Hello (to multiple people)" },
-              { "id": "p3", "setswana": "Ke teng", "english": "I am fine" },
-              { "id": "p4", "setswana": "Ke a leboga", "english": "Thank you" },
-              { "id": "p5", "setswana": "Tsamaya sentle", "english": "Go well" }
+              { "id": "p1", "setswana": "Ke a leboga", "english": "Thank you" },
+              { "id": "p2", "setswana": "Re a leboga", "english": "We thank you" },
+              {
+                "id": "p3",
+                "setswana": "Tsamaya sentle",
+                "english": "Go well (said to a person leaving)"
+              },
+              {
+                "id": "p4",
+                "setswana": "Sala sentle",
+                "english": "Stay well (said by the person leaving)"
+              },
+              { "id": "p5", "setswana": "Ke kopa", "english": "Please / I request" }
             ]
           },
           "answerKey": {
             "pairs": [
-              { "id": "p1", "setswana": "Dumela", "english": "Hello (to one person)" },
-              { "id": "p2", "setswana": "Dumelang", "english": "Hello (to multiple people)" },
-              { "id": "p3", "setswana": "Ke teng", "english": "I am fine" },
-              { "id": "p4", "setswana": "Ke a leboga", "english": "Thank you" },
-              { "id": "p5", "setswana": "Tsamaya sentle", "english": "Go well" }
+              { "id": "p1", "setswana": "Ke a leboga", "english": "Thank you" },
+              { "id": "p2", "setswana": "Re a leboga", "english": "We thank you" },
+              {
+                "id": "p3",
+                "setswana": "Tsamaya sentle",
+                "english": "Go well (said to a person leaving)"
+              },
+              {
+                "id": "p4",
+                "setswana": "Sala sentle",
+                "english": "Stay well (said by the person leaving)"
+              },
+              { "id": "p5", "setswana": "Ke kopa", "english": "Please / I request" }
             ]
           },
-          "explanation": "Match each Setswana greeting with its English meaning.",
-          "xp": 20,
-          "words": ["dumela", "dumelang", "ke-teng", "ke-a-leboga", "tsamaya-sentle"]
+          "explanation": "Thanking, leaving well and asking politely.",
+          "words": ["ke-a-leboga", "re-a-leboga", "tsamaya-sentle", "sala-sentle", "ke-kopa"]
         },
         {
-          "slug": "fill-le-kae",
-          "type": "FILL_BLANK",
-          "prompt": {
-            "sentence": "Le ___ , Rra?",
-            "translationHint": "How are you, Sir?",
-            "blankCount": 1,
-            "wordBank": ["kae", "teng", "sentle"]
-          },
-          "answerKey": {
-            "answers": ["kae"],
-            "acceptAlternates": ["kae"],
-            "allowTypo": false
-          },
-          "explanation": "Le kae? asks how someone is — here with Rra to show respect.",
-          "xp": 10,
-          "words": ["le-kae", "dumela-rra"]
-        },
-        {
-          "slug": "listen-choose-reply",
+          "slug": "r3-listen-re-a-leboga",
           "type": "LISTEN_CHOOSE",
-          "audioUrl": "/media/ke-teng.mp3",
+          "audioUrl": "/media/re-a-leboga.mp3",
           "prompt": {
             "direction": "hear-tn-choose-en",
             "options": [
-              { "id": "fine", "text": "I am fine" },
-              { "id": "thanks", "text": "Thank you" },
-              { "id": "go-well", "text": "Go well" }
+              { "id": "we", "text": "We thank you" },
+              { "id": "one", "text": "Thank you" },
+              { "id": "please", "text": "Please (polite/emphasis)" }
             ]
           },
-          "answerKey": { "correctOptionId": "fine" },
-          "explanation": "Ke teng is the usual reply to Le kae?",
-          "xp": 10,
-          "words": ["ke-teng", "le-kae"]
+          "answerKey": { "correctOptionId": "we" },
+          "explanation": "You heard Re a leboga — thank you from a group.",
+          "words": ["re-a-leboga", "ke-a-leboga"]
         },
         {
-          "slug": "listen-write-dumelang",
-          "type": "TYPE_ANSWER",
-          "audioUrl": "/media/dumelang.mp3",
+          "slug": "r3-quiz-salang",
+          "type": "TRANSLATE_MC",
           "prompt": {
-            "direction": "tn",
-            "listenFirst": true,
-            "sourceText": "Dumelang",
-            "translation": "Hello (to multiple people)"
+            "direction": "tn-en",
+            "phrase": "Salang sentle",
+            "phonetic": "sah-lahng sen-tleh",
+            "options": [
+              { "id": "stay", "text": "Stay well (plural)" },
+              { "id": "go", "text": "Go well (plural)" },
+              { "id": "thanks", "text": "We thank you" }
+            ]
           },
-          "answerKey": {
-            "answers": ["Dumelang"],
-            "acceptAlternates": ["Dumelang"],
-            "allowTypo": false
-          },
-          "explanation": "Dumelang is the greeting you use for a group.",
-          "xp": 15,
-          "words": ["dumelang"]
+          "answerKey": { "correctOptionId": "stay" },
+          "explanation": "Sala is stay, Tsamaya is go — Salang is the plural of Sala.",
+          "words": ["salang-sentle", "tsamayang-sentle"]
         },
         {
-          "slug": "type-thank-you",
+          "slug": "r3-fill-leboga",
+          "type": "FILL_BLANK",
+          "prompt": {
+            "sentence": "Re a ___",
+            "translationHint": "We thank you",
+            "blankCount": 1,
+            "wordBank": ["leboga", "kopa", "tswee"]
+          },
+          "answerKey": { "answers": ["leboga"], "acceptAlternates": ["leboga"], "allowTypo": false },
+          "explanation": "Re a leboga — we thank you.",
+          "words": ["re-a-leboga"]
+        },
+        {
+          "slug": "r3-speak-sala",
+          "type": "SPEAK",
+          "audioUrl": "/media/sala-sentle.mp3",
+          "prompt": {
+            "phrase": "Sala sentle",
+            "english": "Stay well (said by the person leaving)",
+            "phonetic": "sah-lah sen-tleh"
+          },
+          "answerKey": {},
+          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
+          "words": ["sala-sentle"]
+        },
+        {
+          "slug": "r3-review-ke-kopa",
+          "type": "REVIEW_CARD",
+          "prompt": {
+            "setswana": "Ke kopa",
+            "english": "Please / I request",
+            "notes": "Ke kopa metsi — please may I have water."
+          },
+          "answerKey": {},
+          "explanation": "Self-check: did you remember it?",
+          "words": ["ke-kopa"]
+        },
+        {
+          "slug": "r3-build-thusa",
+          "type": "BUILD_SENTENCE",
+          "prompt": {
+            "tokens": [
+              { "id": "t2", "text": "tswee" },
+              { "id": "t3", "text": "thusa" },
+              { "id": "t1", "text": "Tswee" }
+            ],
+            "translationHint": "Please help."
+          },
+          "answerKey": { "order": ["t1", "t2", "t3"] },
+          "explanation": "Tswee tswee thusa — please help.",
+          "words": ["tswee-tswee"]
+        },
+        {
+          "slug": "r3-test-thank-you",
           "type": "TYPE_ANSWER",
           "prompt": {
             "direction": "en-tn",
@@ -398,51 +1974,7 @@
             "allowTypo": true
           },
           "explanation": "Ke a leboga is the standard way to say thank you.",
-          "xp": 15,
           "words": ["ke-a-leboga"]
-        },
-        {
-          "slug": "build-polite-request",
-          "type": "BUILD_SENTENCE",
-          "prompt": {
-            "tokens": [
-              { "id": "t3", "text": "thusa" },
-              { "id": "t1", "text": "Tswee" },
-              { "id": "t2", "text": "tswee" }
-            ],
-            "translationHint": "Please help."
-          },
-          "answerKey": { "order": ["t1", "t2", "t3"] },
-          "explanation": "Tswee tswee thusa — please help.",
-          "xp": 15,
-          "words": ["tswee-tswee"]
-        },
-        {
-          "slug": "speak-ke-a-leboga",
-          "type": "SPEAK",
-          "audioUrl": "/media/ke-a-leboga.mp3",
-          "prompt": {
-            "phrase": "Ke a leboga",
-            "english": "Thank you",
-            "phonetic": "keh ah leh-boh-gah"
-          },
-          "answerKey": {},
-          "explanation": "Say it out loud, then check yourself. The app cannot grade pronunciation yet.",
-          "xp": 10,
-          "words": ["ke-a-leboga"]
-        },
-        {
-          "slug": "review-goodbye",
-          "type": "REVIEW_CARD",
-          "prompt": {
-            "setswana": "Sala sentle",
-            "english": "Stay well (said by the person leaving)",
-            "notes": "The person staying behind says Tsamaya sentle."
-          },
-          "answerKey": {},
-          "explanation": "Self-check: did you remember it?",
-          "xp": 5,
-          "words": ["sala-sentle", "tsamaya-sentle"]
         }
       ]
     }

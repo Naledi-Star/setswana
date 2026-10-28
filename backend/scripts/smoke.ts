@@ -58,30 +58,45 @@ async function main() {
   check(pathResponse.status === 200, 'learning path loads')
   const units = pathResponse.body.units as Json[]
   check(units.length === 1, 'the path has one unit')
-  const firstLesson = (units[0]?.lessons as Json[])[0] as Json
+  const pathLessons = units[0]?.lessons as Json[]
+  check(pathLessons.length === 12, 'lesson one is nine section lessons plus three reviews')
+  const firstLesson = pathLessons[0] as Json
   check(Boolean(firstLesson.id), 'first lesson is visible')
+  check(firstLesson.title === 'Basic Greetings (Singular)', 'the path starts at section 1')
+
+  const audio = await fetch(`${base}/media/dumela.m4a`)
+  check(audio.status === 200, 'the section 1 recording is served')
+  check(String(audio.headers.get('content-type')).includes('audio'), 'the recording is served as audio')
 
   const lesson = await request('GET', `/api/v1/lessons/${firstLesson.id as string}?preview=true`, { token })
   check(lesson.status === 200, 'lesson content loads')
   const exercises = lesson.body.exercises as Json[]
-  check(exercises.length === 9, 'lesson one has nine exercises')
-  if (exercises.length !== 9) return
+  check(exercises.length === 6, 'section 1 is a full lesson with six exercises')
+  if (exercises.length !== 6) return
   check(
     exercises.every((exercise) => !('answerKey' in exercise)),
     'answer keys are not leaked to the client',
   )
+  const guideRows = ((lesson.body.guide as Json).sections as Json[])[0]?.rows as Json[]
+  check(guideRows[0]?.audioUrl === '/media/dumela.m4a', 'a recorded guide row advertises its clip')
+  check(guideRows[1]?.audioUrl === null, 'a guide row waiting for a recording advertises nothing')
+
+  const lastLesson = pathLessons[pathLessons.length - 1] as Json
+  const lastLessonBody = await request('GET', `/api/v1/lessons/${lastLesson.id as string}`, { token })
+  const tips = (lastLessonBody.body.guide as Json).tips as Json | null
+  check(tips?.heading === 'Cultural Context Tips', 'the cultural tips close the last review')
 
   const started = await request('POST', `/api/v1/lessons/${firstLesson.id as string}/start`, { token })
   check(started.status === 201, 'lesson attempt starts')
   const attemptId = started.body.attemptId as string
 
-  const translate = exercises.find((exercise) => exercise.slug === 'translate-dumela')
+  const translate = exercises.find((exercise) => exercise.slug === 's1-quiz-dumela-rra')
   check(Boolean(translate), 'translate exercise present')
   if (!translate) return
 
   const wrong = await request('POST', `/api/v1/attempts/${attemptId}/answers`, {
     token,
-    body: { exerciseId: translate.id, answer: { optionId: 'thanks' } },
+    body: { exerciseId: translate.id, answer: { optionId: 'hello-madam' } },
   })
   check(wrong.status === 200, 'answer is accepted')
   check(wrong.body.isCorrect === false, 'wrong answer is marked incorrect')
@@ -91,7 +106,7 @@ async function main() {
   const idempotentHeaders = { 'idempotency-key': `smoke-${attemptId}-1` }
   const correct = await request('POST', `/api/v1/attempts/${attemptId}/answers`, {
     token,
-    body: { exerciseId: translate.id, answer: { optionId: 'hello' } },
+    body: { exerciseId: translate.id, answer: { optionId: 'hello-sir' } },
     headers: idempotentHeaders,
   })
   check(correct.body.isCorrect === true, 'correct answer is accepted after a miss')
@@ -99,14 +114,15 @@ async function main() {
 
   const replay = await request('POST', `/api/v1/attempts/${attemptId}/answers`, {
     token,
-    body: { exerciseId: translate.id, answer: { optionId: 'hello' } },
+    body: { exerciseId: translate.id, answer: { optionId: 'hello-sir' } },
     headers: idempotentHeaders,
   })
   check(replay.body.xpAwarded === correct.body.xpAwarded, 'idempotent replay returns the original result')
 
   const answersBySlug: Record<string, unknown> = {
-    'translate-dumela': { optionId: 'hello' },
-    'match-greetings': {
+    's1-listen-dumela': { optionId: 'one-person' },
+    's1-quiz-dumela-rra': { optionId: 'hello-sir' },
+    's1-match-titles': {
       matches: [
         ['tn:p1', 'en:p1'],
         ['tn:p2', 'en:p2'],
@@ -115,28 +131,18 @@ async function main() {
         ['tn:p5', 'en:p5'],
       ],
     },
-    'fill-le-kae': { answer: 'kae' },
-    'listen-choose-reply': { skipped: true },
-    'listen-write-dumelang': { skipped: true },
-    'type-thank-you': { answer: 'ke a leboga' },
-    'build-polite-request': { order: ['t1', 't2', 't3'] },
-    'speak-ke-a-leboga': { acknowledged: true },
-    'review-goodbye': { selfMark: 'good' },
+    's1-fill-madam': { answer: 'Mma' },
+    's1-speak-dumela-rra': { acknowledged: true },
+    's1-test-hello-madam': { answer: 'Dumela Mma' },
   }
-  // These two need a recording; without one they skip without costing a heart.
-  const skippedSlugs = new Set(['listen-choose-reply', 'listen-write-dumelang'])
 
   for (const exercise of exercises) {
-    if (exercise.slug === 'translate-dumela') continue
+    if (exercise.slug === 's1-quiz-dumela-rra') continue
     const slug = exercise.slug as string
     const result = await request('POST', `/api/v1/attempts/${attemptId}/answers`, {
       token,
       body: { exerciseId: exercise.id, answer: answersBySlug[slug] },
     })
-    if (skippedSlugs.has(slug)) {
-      check(result.body.skipped === true, `${slug} is skipped until a recording exists`)
-      continue
-    }
     check(result.body.isCorrect === true, `${slug} scored correct`)
   }
 
@@ -144,14 +150,14 @@ async function main() {
   check(completed.status === 200, 'lesson completes')
   check((completed.body.streak as number) === 1, 'first lesson starts a one-day streak')
   check((completed.body.totalXp as number) > 0, 'XP is awarded')
-  check(completed.body.nextLessonId === null, 'a single-lesson path suggests no next lesson')
+  check(Boolean(completed.body.nextLessonId), 'completing a section unlocks the next one')
 
   const me = await request('GET', '/api/v1/me', { token })
   check((me.body.stats as Json).lessonsToday === 1, 'daily goal activity is stored')
   check((me.body.stats as Json).hearts === 4, 'heart loss persists')
 
   const words = await request('GET', '/api/v1/words', { token })
-  check((words.body.words as Json[]).length === 9, 'completed lesson adds its unique words')
+  check((words.body.words as Json[]).length === 6, 'completed lesson adds its unique words')
 
   const queue = await request('GET', '/api/v1/review/queue', { token })
   check((queue.body.items as Json[]).length === 5, 'review queue offers five new words a day')

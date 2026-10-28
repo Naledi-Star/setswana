@@ -24,6 +24,16 @@ jest.mock('react-native-safe-area-context', () => {
 jest.mock('../src/api/client', () => ({
   api: { path: jest.fn(), lesson: jest.fn() },
   ApiError: class ApiError extends Error {},
+  mediaUrl: (url: string | null) => url,
+}))
+
+// expo-audio needs a native player; guide rows only need the speaker button to mount.
+jest.mock('expo-audio', () => ({
+  useAudioPlayer: () => ({ seekTo: jest.fn(), play: jest.fn(), pause: jest.fn() }),
+  useAudioPlayerStatus: () => ({ playing: false }),
+  useAudioRecorder: () => ({}),
+  RecordingPresets: { HIGH_QUALITY: {} },
+  requestRecordingPermissionsAsync: async () => ({ granted: false }),
 }))
 
 const pathResponse = {
@@ -40,11 +50,11 @@ const pathResponse = {
       lessons: [
         {
           id: 'lesson-1',
-          slug: 'basic-greetings-lesson-1',
-          title: 'Basic Greetings and Expressions',
-          subtitle: 'Hello, how are you, thank you and goodbye',
+          slug: 'basic-greetings-section-1',
+          title: 'Basic Greetings (Singular)',
+          subtitle: 'Dumela, Rra and Mma — greeting one person',
           xp: 10,
-          exerciseCount: 9,
+          exerciseCount: 6,
           state: 'active' as const,
         },
       ],
@@ -54,9 +64,9 @@ const pathResponse = {
 
 const lessonResponse = {
   id: 'lesson-1',
-  slug: 'basic-greetings-lesson-1',
-  title: 'Basic Greetings and Expressions',
-  subtitle: 'Hello, how are you, thank you and goodbye',
+  slug: 'basic-greetings-section-1',
+  title: 'Basic Greetings (Singular)',
+  subtitle: 'Dumela, Rra and Mma — greeting one person',
   xpBonus: 10,
   guide: {
     sections: [
@@ -68,6 +78,14 @@ const lessonResponse = {
             pronunciation: 'doo-meh-lah',
             english: 'Hello (to one person)',
             sample: 'Dumela!',
+            audioUrl: '/media/dumela.m4a',
+          },
+          {
+            setswana: 'Rra',
+            pronunciation: 'rrah',
+            english: 'Sir',
+            sample: 'Dumela Rra',
+            audioUrl: null,
           },
         ],
       },
@@ -76,7 +94,7 @@ const lessonResponse = {
   },
   unit: { id: 'unit-1', title: 'Basic Greetings and Expressions', colour: 'blue' },
   exercises: [
-    { id: 'ex-1', slug: 'translate-dumela', type: 'TRANSLATE_MC', prompt: {}, xp: 10, audioUrl: null, position: 0 },
+    { id: 'ex-1', slug: 's1-listen-dumela', type: 'LISTEN_CHOOSE', prompt: {}, xp: 10, audioUrl: '/media/dumela.m4a', position: 0 },
   ],
 }
 
@@ -95,8 +113,8 @@ describe('Lessons tab', () => {
       await renderWithQuery(<LessonsScreen />)
 
       expect(await screen.findByText('Lesson 1')).toBeTruthy()
-      expect(screen.getByText('Hello, how are you, thank you and goodbye')).toBeTruthy()
-      expect(screen.getByText('9 exercises')).toBeTruthy()
+      expect(screen.getByText('Dumela, Rra and Mma — greeting one person')).toBeTruthy()
+      expect(screen.getByText('6 exercises')).toBeTruthy()
     },
     30_000,
   )
@@ -120,6 +138,9 @@ describe('Lessons tab', () => {
       expect(screen.getByText('Say it: Dumela!')).toBeTruthy()
       expect(screen.getByText('Cultural Context Tips')).toBeTruthy()
       expect(screen.getByText('Respect is key when speaking to elders.')).toBeTruthy()
+      // A row with a recording gets a speaker button; a row still awaiting audio does not.
+      expect(screen.getByLabelText('Hear Dumela')).toBeTruthy()
+      expect(screen.queryByLabelText('Hear Rra')).toBeNull()
     },
     30_000,
   )

@@ -87,6 +87,7 @@ export type LessonGuideRow = {
   pronunciation: string | null
   english: string
   sample: string | null
+  audioUrl: string | null
 }
 
 export type LessonGuideSection = {

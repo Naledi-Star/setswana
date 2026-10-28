@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { prisma } from '../../db/client.js'
 import { asyncHandler, requireUserId } from '../../lib/http.js'
 import { forbidden, notFound } from '../../lib/errors.js'
-import { servableAudioUrl } from '../../lib/media.js'
+import { servableAudioUrl, servableLessonGuide } from '../../lib/media.js'
 import { parseQuery } from '../../lib/validation.js'
 import { authenticate, requireUser } from '../../middleware/auth.js'
 import {
@@ -136,7 +136,7 @@ contentRouter.get(
       title: lesson.title,
       subtitle: lesson.subtitle,
       xpBonus: lesson.xpBonus,
-      guide: lesson.guide ?? null,
+      guide: servableLessonGuide(lesson.guide),
       unit: {
         id: lesson.unit.id,
         title: lesson.unit.title,
