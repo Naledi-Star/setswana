@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, Linking, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import {
   RecordingPresets,
   requestRecordingPermissionsAsync,
@@ -224,7 +224,7 @@ export function FillBlankExercise({ exercise, disabled, onAnswer }: ExerciseProp
   const prompt = record(exercise.prompt)
   const sentence = text(prompt.sentence)
   const [value, setValue] = useState('')
-  const [parts] = sentence.split('___')
+  const [before, after] = sentence.split('___')
 
   const submit = () => {
     if (!value.trim()) return
@@ -235,9 +235,9 @@ export function FillBlankExercise({ exercise, disabled, onAnswer }: ExerciseProp
     <View style={styles.exercise}>
       <View style={styles.sentenceCard}>
         <Text style={styles.sentence}>
-          {parts[0]}
+          {before ?? sentence}
           <Text style={styles.blank}>{value || '_____'}</Text>
-          {parts[1] ?? ''}
+          {after ?? ''}
         </Text>
         {prompt.translationHint ? (
           <Text style={[type.caption, { color: colors.muted }]}>{text(prompt.translationHint)}</Text>
@@ -318,9 +318,13 @@ export function TypeAnswerExercise({ exercise, disabled, onAnswer }: ExercisePro
         </>
       ) : (
         <View style={styles.promptText}>
-          <Text style={styles.phrase}>{text(prompt.sourceText)}</Text>
+          <Text style={styles.question}>
+            {direction === 'en-tn'
+              ? `How do you say “${text(prompt.sourceText)}” in Setswana?`
+              : `What does “${text(prompt.sourceText)}” mean in English?`}
+          </Text>
           <Text style={styles.hint}>
-            {direction === 'en-tn' ? 'Write it in Setswana' : 'Write it in English'}
+            {direction === 'en-tn' ? 'Type your answer in Setswana' : 'Type your answer in English'}
           </Text>
         </View>
       )}
@@ -421,6 +425,9 @@ export function SpeakExercise({ exercise, disabled, onAnswer }: ExerciseProps) {
   const [recording, setRecording] = useState(false)
   const [clip, setClip] = useState<string | null>(null)
   const [permissionDenied, setPermissionDenied] = useState(false)
+  // Some devices refuse the dialog outright (permission previously denied or switched
+  // off) — then the only way out is the system settings screen.
+  const [canAskAgain, setCanAskAgain] = useState(true)
 
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY)
   const playback = useAudioPlayer(clip ? { uri: clip } : null)
@@ -433,9 +440,11 @@ export function SpeakExercise({ exercise, disabled, onAnswer }: ExerciseProps) {
     try {
       const permission = await requestRecordingPermissionsAsync()
       if (!permission.granted) {
+        setCanAskAgain(permission.canAskAgain !== false)
         setPermissionDenied(true)
         return
       }
+      setPermissionDenied(false)
       await recorder.prepareToRecordAsync()
       recorder.record()
       setRecording(true)
@@ -501,9 +510,22 @@ export function SpeakExercise({ exercise, disabled, onAnswer }: ExerciseProps) {
       </View>
 
       {permissionDenied ? (
-        <Text style={[type.caption, { color: colors.muted }]}>
-          Microphone permission is off — you can still mark this one yourself.
-        </Text>
+        <View style={styles.permissionNotice}>
+          <Text style={[type.bodySmall, { color: colors.errorText }]}>
+            {canAskAgain
+              ? 'Puo needs the microphone to record you. Allow it when your device asks.'
+              : 'Microphone access for Puo is switched off, so recording is unavailable. Turn it on in your device settings — you can still mark this one yourself.'}
+          </Text>
+          <Button
+            label={canAskAgain ? 'Allow microphone' : 'Open settings'}
+            variant="secondary"
+            onPress={() => {
+              if (canAskAgain) void startRecording()
+              else void Linking.openSettings()
+            }}
+            disabled={disabled}
+          />
+        </View>
       ) : null}
 
       <View style={styles.speakActions}>
@@ -587,11 +609,18 @@ const styles = StyleSheet.create({
   promptRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   promptText: { flex: 1, gap: 4 },
   phrase: { fontFamily: fonts.displayBlack, fontSize: 24, color: colors.ink, letterSpacing: -0.4 },
+  question: { fontFamily: fonts.display, fontSize: 20, color: colors.ink, letterSpacing: -0.4, lineHeight: 28 },
   hint: { fontFamily: fonts.body, fontSize: 13, color: colors.muted, lineHeight: 19 },
   optionsList: { gap: spacing.md },
   notice: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: spacing.sm,
+    backgroundColor: colors.errorTint,
+    padding: spacing.md,
+    borderRadius: radius.md,
+  },
+  permissionNotice: {
     gap: spacing.sm,
     backgroundColor: colors.errorTint,
     padding: spacing.md,

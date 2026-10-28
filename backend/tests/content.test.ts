@@ -93,8 +93,14 @@ describe('lesson 1 structure', () => {
     const rows = guide?.sections[0]?.rows ?? []
     expect(rows[0]?.setswana).toBe('Dumela')
     expect(rows[0]?.audioUrl).toBe('/media/dumela.m4a')
-    // Rra and Mma are declared but not recorded yet.
-    expect(rows[1]?.audioUrl).toBeNull()
+    // Rra and Mma are recorded, so their rows advertise the clip too.
+    expect(rows[1]?.audioUrl).toBe('/media/rra.m4a')
+    expect(rows[2]?.audioUrl).toBe('/media/mma.m4a')
+    // A row whose clip is still unrecorded stays hidden until the file lands.
+    const sectionTwo = unit.lessons[1]
+    const pendingRows = servableLessonGuide(sectionTwo?.guide)?.sections[0]?.rows ?? []
+    expect(pendingRows[0]?.setswana).toBe('Dumelang')
+    expect(pendingRows[0]?.audioUrl).toBeNull()
   })
 })
 

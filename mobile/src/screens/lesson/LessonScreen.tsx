@@ -268,7 +268,6 @@ export function LessonScreen({ lessonId, onExit, onComplete, onReviewWords }: Pr
 
   return (
     <Screen
-      scroll={false}
       contentStyle={styles.content}
       footer={
         <View style={{ paddingBottom: Math.max(insets.bottom, spacing.md) }}>

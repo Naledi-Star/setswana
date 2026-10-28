@@ -63,14 +63,16 @@ export function WelcomeScreen({ navigation }: { navigation: { navigate: (screen:
         <Image source={logo} style={styles.brandLogo} resizeMode="contain" />
         <Text style={styles.wordmark}>Puo</Text>
       </View>
-      <Text style={styles.eyebrow}>Setswana, one conversation at a time.</Text>
+      {/* <Text style={styles.eyebrow}>Setswana, one conversation at a time.</Text> */}
+            <Text style={styles.eyebrow}></Text>
+
 
       <Text style={styles.introTitle}>
-        <Text style={styles.introStrong}>A small lesson{`\n`}every day.</Text>
+        <Text style={styles.introStrong}>A small lesson every day.</Text>
         {`\n`}A language for life.
       </Text>
       <Text style={styles.introBody}>
-        Learn Setswana with Pitsi — short, playful lessons built around real conversation.
+        Short, playful lessons built around real conversation.
       </Text>
 
       <View style={styles.guide}>

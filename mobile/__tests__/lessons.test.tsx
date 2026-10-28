@@ -5,9 +5,13 @@ import { api } from '../src/api/client'
 import { LessonsScreen } from '../src/screens/lessons/LessonsScreen'
 import { LessonGuideScreen } from '../src/screens/lessons/LessonGuideScreen'
 
-jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
-}))
+jest.mock('@react-navigation/native', () => {
+  const actual = jest.requireActual('@react-navigation/native')
+  return {
+    ...actual,
+    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+  }
+})
 
 jest.mock('react-native-safe-area-context', () => {
   const ReactLib = require('react')

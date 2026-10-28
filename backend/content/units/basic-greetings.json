@@ -18,7 +18,7 @@
     {
       "slug": "rra",
       "setswana": "Rra",
-      "audioUrl": "/media/rra.mp3",
+      "audioUrl": "/media/rra.m4a",
       "english": "Sir",
       "notes": "The respectful title for a man. Add it to the greeting: Dumela Rra.",
       "phonetic": "rrah",
@@ -27,7 +27,7 @@
     {
       "slug": "mma",
       "setswana": "Mma",
-      "audioUrl": "/media/mma.mp3",
+      "audioUrl": "/media/mma.m4a",
       "english": "Madam / Mrs",
       "notes": "The respectful title for a woman — also the word for mother. Add it to the greeting: Dumela Mma.",
       "phonetic": "mmah",
@@ -246,14 +246,14 @@
                 "pronunciation": "rrah",
                 "english": "Sir",
                 "sample": "Dumela Rra",
-                "audioUrl": "/media/rra.mp3"
+                "audioUrl": "/media/rra.m4a"
               },
               {
                 "setswana": "Mma",
                 "pronunciation": "mmah",
                 "english": "Madam / Mrs",
                 "sample": "Dumela Mma",
-                "audioUrl": "/media/mma.mp3"
+                "audioUrl": "/media/mma.m4a"
               },
               {
                 "setswana": "Dumela Rra",
@@ -650,14 +650,14 @@
                 "pronunciation": "rrah",
                 "english": "Sir",
                 "sample": "Dumela Rra",
-                "audioUrl": "/media/rra.mp3"
+                "audioUrl": "/media/rra.m4a"
               },
               {
                 "setswana": "Mma",
                 "pronunciation": "mmah",
                 "english": "Madam / Mrs",
                 "sample": "Dumela Mma",
-                "audioUrl": "/media/mma.mp3"
+                "audioUrl": "/media/mma.m4a"
               },
               {
                 "setswana": "Dumela Rra",

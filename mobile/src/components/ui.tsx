@@ -1,4 +1,5 @@
 import React from 'react'
+import { BottomTabBarHeightContext } from '@react-navigation/bottom-tabs'
 import {
   ActivityIndicator,
   Image,
@@ -31,6 +32,10 @@ export function Screen({
   contentStyle?: StyleProp<ViewStyle>
   footer?: React.ReactNode
 }) {
+  // The tab bar floats absolutely over the scene, so a footer sits on top of it unless
+  // we reserve its height. Outside the tab shell (guest mode) this context is empty.
+  const tabBarHeight = React.useContext(BottomTabBarHeightContext) ?? 0
+
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: bg }]} edges={['top', 'left', 'right']}>
       {scroll ? (
@@ -44,7 +49,7 @@ export function Screen({
       ) : (
         <View style={[styles.screenContent, styles.flex, contentStyle]}>{children}</View>
       )}
-      {footer}
+      {footer ? <View style={{ marginBottom: tabBarHeight }}>{footer}</View> : null}
     </SafeAreaView>
   )
 }
