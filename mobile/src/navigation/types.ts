@@ -18,7 +18,6 @@ export type LearnStackParamList = {
     lessonTitle: string
     nextLessonId: string | null
   }
-  Settings: undefined
 }
 
 export type LessonsStackParamList = {
@@ -40,6 +39,15 @@ export type WordsStackParamList = {
 
 export type ProgressStackParamList = {
   Progress: undefined
+}
+
+export type SettingsStackParamList = {
+  Profile: undefined
+  ProfileDetails: undefined
+  DailyGoal: undefined
+  Reminder: undefined
+  SignOut: undefined
+  DeleteAccount: undefined
 }
 
 export type AdminStackParamList = {
@@ -67,6 +75,7 @@ export type TabParamList = {
   LessonsTab: undefined
   WordsTab: undefined
   ProgressTab: undefined
+  SettingsTab: undefined
   AdminTab: undefined
 }
 
@@ -82,6 +91,11 @@ export type LessonsScreenProps<T extends keyof LessonsStackParamList> = NativeSt
 
 export type WordsScreenProps<T extends keyof WordsStackParamList> = NativeStackScreenProps<
   WordsStackParamList,
+  T
+>
+
+export type SettingsScreenProps<T extends keyof SettingsStackParamList> = NativeStackScreenProps<
+  SettingsStackParamList,
   T
 >
 

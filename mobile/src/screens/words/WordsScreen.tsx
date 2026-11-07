@@ -7,7 +7,7 @@ import { api, ApiError } from '../../api/client'
 import type { WordDto } from '../../api/types'
 import { AudioButton } from '../../components/AudioButton'
 import { Icon } from '../../components/Icon'
-import { Button, EmptyState, ErrorState, Kicker, LoadingView, Screen } from '../../components/ui'
+import { Button, EmptyState, ErrorState, LoadingView, Screen } from '../../components/ui'
 import { colors, fonts, radius, spacing, type } from '../../design/tokens'
 import type { WordsStackParamList } from '../../navigation/types'
 
@@ -21,13 +21,6 @@ const FILTERS: { key: Filter; label: string }[] = [
   { key: 'known', label: 'Known' },
 ]
 
-const borderColour: Record<string, string> = {
-  blue: colors.blue,
-  coral: colors.coral,
-  gold: colors.gold,
-  green: colors.green,
-}
-
 export function WordsScreen() {
   const navigation = useNavigation<Nav>()
   const [filter, setFilter] = useState<Filter>('all')
@@ -37,8 +30,7 @@ export function WordsScreen() {
 
   return (
     <Screen>
-      <Kicker>Your collection</Kicker>
-      <Text style={[type.displayXL, { marginTop: 4 }]}>Words you know</Text>
+      <Text style={[type.displayXL, { marginTop: spacing.lg }]}>Words you know</Text>
       <Text style={[type.bodySmall, { color: colors.muted, marginTop: 4 }]}>
         Tap a card to hear it spoken.
       </Text>
@@ -107,14 +99,12 @@ export function WordsScreen() {
 }
 
 function WordRow({ word, onOpen }: { word: WordDto; onOpen: () => void }) {
-  const tint = borderColour[word.unit?.colour ?? 'blue'] ?? colors.blue
-
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={`${word.setswana}, ${word.english}`}
       onPress={onOpen}
-      style={({ pressed }) => [styles.wordRow, { borderLeftColor: tint }, pressed && { opacity: 0.9 }]}
+      style={({ pressed }) => [styles.wordRow, pressed && { opacity: 0.9 }]}
     >
       <AudioButton audioUrl={word.audioUrl} />
       <View style={styles.wordCopy}>
@@ -151,7 +141,6 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     borderWidth: 1,
     borderColor: colors.line,
-    borderLeftWidth: 5,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
   },

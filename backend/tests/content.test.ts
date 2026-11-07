@@ -7,7 +7,7 @@ import {
   validateUnitContent,
   type ExerciseContent,
 } from '../src/content/schema.js'
-import { contentDir, servableLessonGuide } from '../src/lib/media.js'
+import { audioFileFromUrl, contentDir, servableLessonGuide } from '../src/lib/media.js'
 
 async function loadUnit() {
   const raw = JSON.parse(
@@ -86,21 +86,36 @@ describe('lesson 1 structure', () => {
     expect(withTips[0]?.guide?.tips?.heading).toBe('Cultural Context Tips')
   })
 
-  it('serves guide audio only once the recording is on disk', async () => {
+  it('serves guide audio from its section folder once the recording is on disk', async () => {
     const unit = await loadUnit()
     const sectionOne = unit.lessons[0]
     const guide = servableLessonGuide(sectionOne?.guide)
     const rows = guide?.sections[0]?.rows ?? []
     expect(rows[0]?.setswana).toBe('Dumela')
-    expect(rows[0]?.audioUrl).toBe('/media/dumela.m4a')
-    // Rra and Mma are recorded, so their rows advertise the clip too.
-    expect(rows[1]?.audioUrl).toBe('/media/rra.m4a')
-    expect(rows[2]?.audioUrl).toBe('/media/mma.m4a')
-    // A row whose clip is still unrecorded stays hidden until the file lands.
+    expect(rows[0]?.audioUrl).toBe('/media/Lesson%201%20section%201/dumela.m4a')
+    expect(rows[1]?.audioUrl).toBe('/media/Lesson%201%20section%201/rra.m4a')
+    expect(rows[2]?.audioUrl).toBe('/media/Lesson%201%20section%201/mma.m4a')
+    // Section 2's recordings are filed in their own folder and now play too.
     const sectionTwo = unit.lessons[1]
-    const pendingRows = servableLessonGuide(sectionTwo?.guide)?.sections[0]?.rows ?? []
-    expect(pendingRows[0]?.setswana).toBe('Dumelang')
+    const sectionTwoRows = servableLessonGuide(sectionTwo?.guide)?.sections[0]?.rows ?? []
+    expect(sectionTwoRows[0]?.setswana).toBe('Dumelang')
+    expect(sectionTwoRows[0]?.audioUrl).toBe('/media/Lesson%201%20section%202/dumelang.m4a')
+    expect(sectionTwoRows[3]?.audioUrl).toBe(
+      '/media/Lesson%201%20section%202/dumelang-bomma-le-borra.m4a',
+    )
+    // A row whose clip is still unrecorded stays hidden until the file lands.
+    const sectionThree = unit.lessons[2]
+    const pendingRows = servableLessonGuide(sectionThree?.guide)?.sections[0]?.rows ?? []
+    expect(pendingRows[0]?.setswana).toBe('Le kae?')
     expect(pendingRows[0]?.audioUrl).toBeNull()
+  })
+
+  it('resolves recordings in section folders and refuses paths outside the audio folder', () => {
+    const nested = audioFileFromUrl('/media/Lesson%201%20section%201/dumela.m4a')
+    expect(nested?.endsWith(path.join('Lesson 1 section 1', 'dumela.m4a'))).toBe(true)
+    expect(audioFileFromUrl('/media/../../package.json')).toBeNull()
+    expect(audioFileFromUrl('/media/Lesson%201%20section%201/../secret.m4a')).toBeNull()
+    expect(audioFileFromUrl('/media/Lesson%201%20section%201/notes.txt')).toBeNull()
   })
 })
 

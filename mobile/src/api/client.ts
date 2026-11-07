@@ -39,6 +39,8 @@ function defaultBaseUrl(): string {
 export const API_URL = defaultBaseUrl()
 
 const DEFAULT_TIMEOUT_MS = 30_000
+/** Sign-in and sign-up either answer quickly or not at all; do not spin for 30s. */
+const AUTH_TIMEOUT_MS = 15_000
 
 export class ApiError extends Error {
   readonly status: number
@@ -236,9 +238,13 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     }
     // Otherwise it was either a timeout (controller fired) or a network error.
     if (signal?.aborted) {
-      throw new ApiError(0, 'TIMEOUT', 'The request took too long. Please try again.')
+      throw new ApiError(
+        0,
+        'TIMEOUT',
+        `Learn Setswana couldn't reach the server at ${API_URL}. Make sure the backend is running and this device is on the same network, then try again.`,
+      )
     }
-    throw new ApiError(0, 'NETWORK', 'Puo needs a connection. Check your network and try again.')
+    throw new ApiError(0, 'NETWORK', 'Learn Setswana needs a connection. Check your network and try again.')
   } finally {
     cleanup()
   }
@@ -303,6 +309,7 @@ export const api = Object.freeze({
       body: input,
       anonymous: true,
       allowRefresh: false,
+      timeoutMs: AUTH_TIMEOUT_MS,
     }),
 
   login: (input: { email: string; password: string; deviceId: string; platform: 'ios' | 'android' }) =>
@@ -311,6 +318,7 @@ export const api = Object.freeze({
       body: input,
       anonymous: true,
       allowRefresh: false,
+      timeoutMs: AUTH_TIMEOUT_MS,
     }),
 
   google: (input: {
@@ -324,6 +332,7 @@ export const api = Object.freeze({
       body: input,
       anonymous: true,
       allowRefresh: false,
+      timeoutMs: AUTH_TIMEOUT_MS,
     }),
 
   refresh: (refreshToken: string, deviceId: string) =>

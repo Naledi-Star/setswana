@@ -66,7 +66,7 @@ export function OnboardingScreen() {
           <View style={styles.mascot}>
             <Pitsi size={128} />
           </View>
-          <Kicker>Welcome to Puo</Kicker>
+          <Kicker>Welcome to Learn Setswana</Kicker>
           <Text style={[type.display, { marginTop: 6 }]}>Dumela! What should we call you?</Text>
           <TextField
             label="Your name"

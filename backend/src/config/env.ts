@@ -15,7 +15,7 @@ const envSchema = z.object({
   MEDIA_BASE_URL: z.string().default('http://localhost:4000/media'),
   GOOGLE_CLIENT_IDS: z.string().default(''),
   EMAIL_TRANSPORT: z.enum(['console', 'disabled']).default('console'),
-  EMAIL_FROM: z.string().default('Puo <hello@example.com>'),
+  EMAIL_FROM: z.string().default('Learn Setswana <hello@example.com>'),
   TRUST_PROXY: z
     .string()
     .default('false')

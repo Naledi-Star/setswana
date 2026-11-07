@@ -9,6 +9,7 @@ import { useAuth } from '../../auth/AuthProvider'
 import { Pitsi } from '../../components/Pitsi'
 import { BrandHeader, Button, Card, IconButton, Kicker, LoadingView, Screen, StatChip, styles as ui } from '../../components/ui'
 import { colors, radius, spacing, type } from '../../design/tokens'
+import { lessonLabels } from '../../lib/lessonLabels'
 import { useConfig } from '../../lib/useConfig'
 import type { LearnStackParamList } from '../../navigation/types'
 import { Icon } from '../../components/Icon'
@@ -79,14 +80,6 @@ export function HomeScreen() {
                 <StatChip icon="flame" value={stats?.currentStreak ?? 0} tone="streak" />
                 <StatChip icon="bolt" value={stats?.totalXp ?? 0} />
               </>
-            ) : null}
-            {!isGuest ? (
-              <IconButton
-                icon="settings"
-                label="Settings"
-                tone="blue"
-                onPress={() => navigation.navigate('Settings')}
-              />
             ) : null}
           </View>
         }
@@ -193,6 +186,7 @@ export function HomeScreen() {
             <UnitSection
               key={unit.id}
               unit={unit}
+              unitNumber={unitIndex + 1}
               onOpen={openLesson}
               isLast={unitIndex === pathQuery.data!.units.length - 1}
             />
@@ -202,7 +196,7 @@ export function HomeScreen() {
 
       {isGuest ? (
         <Text style={[type.caption, styles.guestFoot]}>
-          Puo needs a connection. Lessons and progress live on the server.
+          Learn Setswana needs a connection. Lessons and progress live on the server.
         </Text>
       ) : null}
     </Screen>
@@ -211,14 +205,17 @@ export function HomeScreen() {
 
 function UnitSection({
   unit,
+  unitNumber,
   onOpen,
   isLast,
 }: {
   unit: PathUnit
+  unitNumber: number
   onOpen: (lessonId: string) => void
   isLast: boolean
 }) {
   const tint = unitTint[unit.colour] ?? colors.blue
+  const labels = lessonLabels(unit.lessons)
 
   return (
     <View style={styles.unit}>
@@ -227,7 +224,7 @@ function UnitSection({
           <Icon name={unit.state === 'locked' ? 'lock' : 'book'} size={18} color={colors.white} />
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[type.label, { color: colors.muted }]}>{unit.titleEn}</Text>
+          <Text style={[type.label, { color: colors.muted }]}>Lesson {unitNumber}</Text>
           <Text style={[type.title, { color: unit.state === 'locked' ? colors.muted : colors.ink }]}>
             {unit.title}
           </Text>
@@ -240,6 +237,7 @@ function UnitSection({
           <LessonRow
             key={lesson.id}
             lesson={lesson}
+            label={labels[index] ?? 'Section'}
             tint={tint}
             last={index === unit.lessons.length - 1}
             onOpen={onOpen}
@@ -253,11 +251,13 @@ function UnitSection({
 
 function LessonRow({
   lesson,
+  label,
   tint,
   last,
   onOpen,
 }: {
   lesson: PathLesson
+  label: string
   tint: string
   last: boolean
   onOpen: (lessonId: string) => void
@@ -287,7 +287,7 @@ function LessonRow({
 
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`${lesson.title}${locked ? ', locked' : done ? ', complete' : ''}`}
+        accessibilityLabel={`${label}: ${lesson.title}${locked ? ', locked' : done ? ', complete' : ''}`}
         disabled={locked}
         onPress={() => onOpen(lesson.id)}
         style={({ pressed }) => [
@@ -299,7 +299,7 @@ function LessonRow({
       >
         <View style={{ flex: 1 }}>
           <Text style={[type.caption, { color: colors.muted }]}>
-            {done ? 'Completed' : `${lesson.exerciseCount} exercises`}
+            {label} · {done ? 'Completed' : `${lesson.exerciseCount} exercises`}
           </Text>
           <Text style={[type.subtitle, { color: locked ? colors.muted : colors.ink, marginTop: 2 }]}>
             {lesson.title}

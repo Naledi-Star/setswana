@@ -1,4 +1,4 @@
-# Puo API
+# Learn Setswana API
 
 Express + TypeScript + Prisma + PostgreSQL. Every lesson, word, score, heart, streak and unlock decision lives here; the mobile app only renders what this server returns.
 
@@ -47,14 +47,14 @@ npm test
 ## Content pipeline
 
 1. Put lesson documents' output into `content/units/<slug>.json` (schema in `src/content/schema.ts`).
-2. Drop recordings in `content/audio/<slug>.mp3` (or `.m4a` / `.wav`), referenced as `/media/<slug>.mp3`.
+2. Drop recordings in the folder for their lesson and section, e.g. `content/audio/Lesson 1 section 1/<slug>.mp3` (or `.m4a` / `.wav`), referenced as `/media/Lesson%201%20section%201/<slug>.mp3`. Clips still sitting directly in `content/audio` keep working as `/media/<slug>.mp3`.
 3. `npm run content:validate` — fails on missing audio, bad answer keys, unknown words, duplicate slugs, invalid exercise shapes. While a unit's clips are still unrecorded, set `"audioPending": true` on the unit so the missing files are listed as a to-record checklist (warnings) instead of failing the seed. Remove the flag once everything is recorded and validation goes strict again.
 4. `npm run seed` — idempotent upsert by slug. A lesson dropped from a unit file is deleted so the file stays the source of truth; if a learner already attempted it, the row is kept with its history but unpublished so it leaves the path.
 5. Publish units/lessons through the admin API or app; drafts never reach learners.
 
 Lesson 1 ("Basic Greetings and Expressions") is twelve lessons on the path: the nine sections of the owner's guide, each one a full lesson with a recording, a fill-in-the-blank, a record-yourself task and a closing mini test, plus a review lesson after every three sections. Match-the-pairs appears only where a section (or review) has three or more phrases to pair. The Cultural Context Tips sit at the end of the last review, once all nine sections are finished.
 
-Every word, guide row and audio exercise declares its clip (`/media/<slug>.m4a` or `.mp3`) and `audioPending: true` records that only the section 1 clips exist so far. Audio is only advertised to clients once the file is on disk (`servableAudioUrl`), so the app hides the speaker button and listening exercises skip politely until the owner records a clip and drops it in `content/audio/` — at which point it plays with no re-seed and no app release. `dumela.m4a`, `dumela-rra.m4a`, `dumela-mma.m4a`, `rra.m4a` and `mma.m4a` (plus the `-slow` takes) are recorded; everything else is the to-record checklist that `npm run content:validate` prints as warnings.
+Every word, guide row and audio exercise declares its clip (e.g. `/media/Lesson%201%20section%201/dumela.m4a`) and `audioPending: true` records that only lesson 1 sections 1-2 are recorded so far. Audio is only advertised to clients once the file is on disk (`servableAudioUrl`), so the app hides the speaker button and listening exercises skip politely until the owner records a clip and drops it in `content/audio/` — at which point it plays with no re-seed and no app release. Section 1 (`dumela`, `dumela-rra`, `dumela-mma`, `rra`, `mma`, plus the `-slow` takes) and section 2 (`dumelang`, `dumelang-bomma`, `dumelang-borra`, `dumelang-bomma-le-borra`) are recorded; everything else is the to-record checklist that `npm run content:validate` prints as warnings.
 
 ## API surface
 

@@ -1,4 +1,4 @@
-# Puo mobile
+# Learn Setswana mobile
 
 Expo (SDK 58) + React Native + TypeScript. Phones and tablets, iOS and Android. The learner app is native-only — there is deliberately no Expo web target.
 

@@ -45,7 +45,7 @@ describe('Welcome screen', () => {
 
       await renderWithQuery(<WelcomeScreen navigation={{ navigate: jest.fn() }} />)
 
-      expect(await screen.findByText('Puo')).toBeTruthy()
+      expect(await screen.findByText('Learn Setswana')).toBeTruthy()
       expect(screen.getByText('Get started')).toBeTruthy()
       expect(screen.getByText('I already have an account')).toBeTruthy()
       expect(await screen.findByText('Try a lesson first')).toBeTruthy()

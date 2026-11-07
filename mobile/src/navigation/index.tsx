@@ -18,7 +18,14 @@ import { WordsScreen } from '../screens/words/WordsScreen'
 import { WordDetailScreen } from '../screens/words/WordDetailScreen'
 import { ReviewScreen } from '../screens/words/ReviewScreen'
 import { ProgressScreen } from '../screens/progress/ProgressScreen'
-import { SettingsScreen } from '../screens/settings/SettingsScreen'
+import { ProfileScreen } from '../screens/settings/ProfileScreen'
+import {
+  DailyGoalModal,
+  DeleteAccountModal,
+  ProfileDetailsModal,
+  ReminderModal,
+  SignOutModal,
+} from '../screens/settings/SettingsModals'
 import {
   AdminHomeScreen,
   ConfigAdminScreen,
@@ -36,6 +43,7 @@ import type {
   LessonsScreenProps,
   LessonsStackParamList,
   ProgressStackParamList,
+  SettingsStackParamList,
   TabParamList,
   WordsStackParamList,
 } from './types'
@@ -45,6 +53,7 @@ const LearnStackNav = createNativeStackNavigator<LearnStackParamList>()
 const LessonsStackNav = createNativeStackNavigator<LessonsStackParamList>()
 const WordsStackNav = createNativeStackNavigator<WordsStackParamList>()
 const ProgressStackNav = createNativeStackNavigator<ProgressStackParamList>()
+const SettingsStackNav = createNativeStackNavigator<SettingsStackParamList>()
 const AdminStackNav = createNativeStackNavigator<AdminStackParamList>()
 const GuestStackNav = createNativeStackNavigator<GuestStackParamList>()
 const Tabs = createBottomTabNavigator<TabParamList>()
@@ -131,7 +140,6 @@ function LearnNavigator() {
         component={LearnComplete}
         options={{ gestureEnabled: false }}
       />
-      <LearnStackNav.Screen name="Settings" component={SettingsScreen} />
     </LearnStackNav.Navigator>
   )
 }
@@ -198,6 +206,29 @@ function ProgressNavigator() {
   )
 }
 
+const modalOptions = { presentation: 'modal' as const, animation: 'slide_from_bottom' as const }
+
+function SettingsNavigator() {
+  return (
+    <SettingsStackNav.Navigator screenOptions={stackOptions}>
+      <SettingsStackNav.Screen name="Profile" component={ProfileScreen} />
+      <SettingsStackNav.Screen
+        name="ProfileDetails"
+        component={ProfileDetailsModal}
+        options={modalOptions}
+      />
+      <SettingsStackNav.Screen name="DailyGoal" component={DailyGoalModal} options={modalOptions} />
+      <SettingsStackNav.Screen name="Reminder" component={ReminderModal} options={modalOptions} />
+      <SettingsStackNav.Screen name="SignOut" component={SignOutModal} options={modalOptions} />
+      <SettingsStackNav.Screen
+        name="DeleteAccount"
+        component={DeleteAccountModal}
+        options={modalOptions}
+      />
+    </SettingsStackNav.Navigator>
+  )
+}
+
 function AdminNavigator() {
   return (
     <AdminStackNav.Navigator screenOptions={stackOptions}>
@@ -211,7 +242,7 @@ function AdminNavigator() {
   )
 }
 
-function tabIcon(name: 'home' | 'book' | 'cards' | 'chart' | 'admin') {
+function tabIcon(name: 'home' | 'book' | 'cards' | 'chart' | 'settings' | 'admin') {
   return ({ color, size }: { color: string; size: number }) => (
     <Icon name={name} size={size} color={color} filled={false} />
   )
@@ -251,6 +282,11 @@ function MainTabs() {
         name="ProgressTab"
         component={ProgressNavigator}
         options={{ title: 'Progress', tabBarIcon: tabIcon('chart') }}
+      />
+      <Tabs.Screen
+        name="SettingsTab"
+        component={SettingsNavigator}
+        options={{ title: 'Settings', tabBarIcon: tabIcon('settings') }}
       />
       {isAdmin ? (
         <Tabs.Screen
@@ -312,7 +348,7 @@ function LoadingSplash() {
   return (
     <View style={styles.splash}>
       <Pitsi size={150} />
-      <Text style={styles.splashWord}>Puo</Text>
+      <Text style={styles.splashWord}>Learn Setswana</Text>
       <Text style={styles.splashTag}>Setswana, one conversation at a time.</Text>
     </View>
   )

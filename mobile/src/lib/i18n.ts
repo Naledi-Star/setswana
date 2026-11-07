@@ -100,7 +100,7 @@ const en: Dictionary = {
   'admin.exercisePrompt': 'Prompt (JSON)',
   'admin.exerciseKey': 'Answer key (JSON)',
   'admin.audioUrl': 'Audio URL',
-  'error.offline': 'Puo needs a connection. Check your network and try again.',
+  'error.offline': 'Learn Setswana needs a connection. Check your network and try again.',
   'error.generic': 'Something went wrong. Please try again.',
   'error.retry': 'Try again',
 }

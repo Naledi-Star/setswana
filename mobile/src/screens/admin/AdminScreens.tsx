@@ -177,7 +177,7 @@ export function AdminHomeScreen({ navigation }: AdminScreenProps<'AdminHome'>) {
   return (
     <Screen>
       <AdminHeader title="Content admin" />
-      <Text style={[type.display, { marginTop: spacing.sm }]}>Manage Puo</Text>
+      <Text style={[type.display, { marginTop: spacing.sm }]}>Manage Learn Setswana</Text>
       <Text style={[type.bodySmall, { color: colors.muted, marginTop: 4 }]}>
         Everything here is served to learners from the API.
       </Text>

@@ -1,6 +1,6 @@
-# Puo — learn Setswana
+# Learn Setswana
 
-A production-shaped implementation of the Puo spec: a native learner app, an API that owns every learning decision, an admin path for content and configuration, and a seed content pipeline.
+A production-shaped implementation of the Learn Setswana spec: a native learner app, an API that owns every learning decision, an admin path for content and configuration, and a seed content pipeline.
 
 ```
 backend/   Express + TypeScript + Prisma + PostgreSQL API

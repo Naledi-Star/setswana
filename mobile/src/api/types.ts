@@ -116,6 +116,7 @@ export type PathLesson = {
   slug: string
   title: string
   subtitle: string | null
+  kind: string
   xp: number
   exerciseCount: number
   state: 'done' | 'active' | 'open' | 'locked'

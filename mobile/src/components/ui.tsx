@@ -32,22 +32,26 @@ export function Screen({
   contentStyle?: StyleProp<ViewStyle>
   footer?: React.ReactNode
 }) {
-  // The tab bar floats absolutely over the scene, so a footer sits on top of it unless
-  // we reserve its height. Outside the tab shell (guest mode) this context is empty.
+  // The tab bar floats absolutely over the scene, so content and footers would sit on top
+  // of it unless we reserve its height. Outside the tab shell (guest mode) this context is empty.
   const tabBarHeight = React.useContext(BottomTabBarHeightContext) ?? 0
+  const tabBarInset = tabBarHeight > 0 ? { paddingBottom: spacing.xxxl + tabBarHeight } : null
 
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: bg }]} edges={['top', 'left', 'right']}>
       {scroll ? (
         <ScrollView
-          contentContainerStyle={[styles.screenContent, contentStyle]}
+          contentContainerStyle={[styles.screenContent, contentStyle, tabBarInset]}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           {children}
         </ScrollView>
       ) : (
-        <View style={[styles.screenContent, styles.flex, contentStyle]}>{children}</View>
+        // A screen with a footer already offsets it for the tab bar, so only pad plain screens.
+        <View style={[styles.screenContent, styles.flex, contentStyle, !footer && tabBarInset]}>
+          {children}
+        </View>
       )}
       {footer ? <View style={{ marginBottom: tabBarHeight }}>{footer}</View> : null}
     </SafeAreaView>
@@ -59,7 +63,9 @@ export function BrandHeader({ right, compact = false }: { right?: React.ReactNod
     <View style={[styles.brandRow, compact && styles.brandRowCompact]}>
       <View style={styles.brandLockup}>
         <Image source={logo} style={compact ? styles.logoSmall : styles.logo} resizeMode="contain" />
-        <Text style={[styles.wordmark, compact && styles.wordmarkSmall]}>Puo</Text>
+        <Text style={[styles.wordmark, compact && styles.wordmarkSmall]} numberOfLines={1}>
+          Learn Setswana
+        </Text>
       </View>
       {right}
     </View>
@@ -494,17 +500,24 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: spacing.lg,
+    gap: spacing.sm,
     marginTop: spacing.xxl,
   },
   brandRowCompact: {
     paddingBottom: spacing.sm,
   },
-  brandLockup: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  brandLockup: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flexShrink: 1 },
   logo: { width: 40, height: 40 },
   logoSmall: { width: 30, height: 30 },
-  wordmark: { fontFamily: fonts.displayBlack, fontSize: 26, color: colors.navy, letterSpacing: -0.8 },
-  wordmarkSmall: { fontSize: 18 },
+  wordmark: {
+    fontFamily: fonts.displayBlack,
+    fontSize: 15,
+    lineHeight: 19,
+    color: colors.navy,
+    letterSpacing: -0.5,
+    flexShrink: 1,
+  },
+  wordmarkSmall: { fontSize: 13, lineHeight: 17 },
   eyebrowText: {
     color: colors.orange,
     fontFamily: fonts.displayCaveat,

@@ -57,9 +57,20 @@ const pathResponse = {
           slug: 'basic-greetings-section-1',
           title: 'Basic Greetings (Singular)',
           subtitle: 'Dumela, Rra and Mma — greeting one person',
+          kind: 'LESSON',
           xp: 10,
           exerciseCount: 6,
           state: 'active' as const,
+        },
+        {
+          id: 'review-1',
+          slug: 'basic-greetings-review-1',
+          title: 'Review 1: Sections 1-3',
+          subtitle: null,
+          kind: 'PRACTICE',
+          xp: 10,
+          exerciseCount: 8,
+          state: 'open' as const,
         },
       ],
     },
@@ -110,13 +121,17 @@ function renderWithQuery(ui: React.ReactElement) {
 describe('Lessons tab', () => {
   // The first render of a screen warms the asset transformer, which is slow on a cold cache.
   it(
-    'lists the lessons by number',
+    'numbers one lesson with its sections and reviews',
     async () => {
       ;(api.path as jest.Mock).mockResolvedValue(pathResponse)
 
       await renderWithQuery(<LessonsScreen />)
 
+      // "Basic Greetings and Expressions" is Lesson 1; its items are sections, not lessons.
       expect(await screen.findByText('Lesson 1')).toBeTruthy()
+      expect(screen.getByText('Section 1')).toBeTruthy()
+      expect(screen.getByText('Review 1')).toBeTruthy()
+      expect(screen.queryByText('Lesson 2')).toBeNull()
       expect(screen.getByText('Dumela, Rra and Mma — greeting one person')).toBeTruthy()
       expect(screen.getByText('6 exercises')).toBeTruthy()
     },

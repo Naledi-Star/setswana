@@ -477,7 +477,7 @@ export function SpeakExercise({ exercise, disabled, onAnswer }: ExerciseProps) {
       </View>
 
       <Text style={[type.bodySmall, { color: colors.muted }]}>
-        Say it out loud, then listen back. Puo can’t grade pronunciation yet — this check is yours.
+        Say it out loud, then listen back. Learn Setswana can’t grade pronunciation yet — this check is yours.
       </Text>
 
       <View style={styles.recordRow}>
@@ -513,8 +513,8 @@ export function SpeakExercise({ exercise, disabled, onAnswer }: ExerciseProps) {
         <View style={styles.permissionNotice}>
           <Text style={[type.bodySmall, { color: colors.errorText }]}>
             {canAskAgain
-              ? 'Puo needs the microphone to record you. Allow it when your device asks.'
-              : 'Microphone access for Puo is switched off, so recording is unavailable. Turn it on in your device settings — you can still mark this one yourself.'}
+              ? 'Learn Setswana needs the microphone to record you. Allow it when your device asks.'
+              : 'Microphone access for Learn Setswana is switched off, so recording is unavailable. Turn it on in your device settings — you can still mark this one yourself.'}
           </Text>
           <Button
             label={canAskAgain ? 'Allow microphone' : 'Open settings'}

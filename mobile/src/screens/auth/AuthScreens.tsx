@@ -61,7 +61,7 @@ export function WelcomeScreen({ navigation }: { navigation: { navigate: (screen:
 
       <View style={styles.brand}>
         <Image source={logo} style={styles.brandLogo} resizeMode="contain" />
-        <Text style={styles.wordmark}>Puo</Text>
+        <Text style={styles.wordmark}>Learn Setswana</Text>
       </View>
       {/* <Text style={styles.eyebrow}>Setswana, one conversation at a time.</Text> */}
             <Text style={styles.eyebrow}></Text>
@@ -260,7 +260,7 @@ export function SignInScreen({
       </Pressable>
 
       <Pressable onPress={() => navigation.navigate('SignUp')} style={styles.footerLink}>
-        <Text style={[type.bodySmall, { color: colors.muted }]}>New to Puo? </Text>
+        <Text style={[type.bodySmall, { color: colors.muted }]}>New to Learn Setswana? </Text>
         <Text style={[type.bodySmall, styles.link]}>Create an account</Text>
       </Pressable>
     </Screen>
@@ -432,7 +432,7 @@ export function ForgotPasswordScreen({ navigation }: { navigation: { goBack: () 
           <Text style={[type.bodySmall, { color: colors.muted, marginTop: 4 }]}>
             {sent.emailDelivery
               ? 'If that email has an account, the reset link is on its way.'
-              : 'Email delivery is not switched on yet, so no message can be sent. Ask the Puo team to reset your password for now.'}
+              : 'Email delivery is not switched on yet, so no message can be sent. Ask the Learn Setswana team to reset your password for now.'}
           </Text>
         </View>
       ) : (
@@ -484,9 +484,9 @@ const styles = StyleSheet.create({
   brandLogo: { width: 84, height: 84 },
   wordmark: {
     fontFamily: fonts.displayBlack,
-    fontSize: 46,
+    fontSize: 34,
     color: colors.navy,
-    letterSpacing: -3,
+    letterSpacing: -1.6,
   },
   eyebrow: {
     marginTop: spacing.xxl,

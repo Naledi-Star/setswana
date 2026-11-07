@@ -43,7 +43,7 @@ export async function sendPasswordResetEmail(to: string, token: string): Promise
   const link = `${env.PUBLIC_API_URL}/reset-password?token=${encodeURIComponent(token)}`
   await emailTransport.send({
     to,
-    subject: 'Reset your Puo password',
+    subject: 'Reset your Learn Setswana password',
     text: `Open this link within 30 minutes to choose a new password:\n\n${link}\n\nIf you did not ask for this, ignore this email.`,
   })
 }

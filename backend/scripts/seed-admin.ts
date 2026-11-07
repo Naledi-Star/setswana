@@ -21,7 +21,7 @@ async function main() {
 
   const email = argument('email')?.trim().toLowerCase()
   const password = argument('password')
-  const displayName = argument('name') ?? 'Puo admin'
+  const displayName = argument('name') ?? 'Learn Setswana admin'
 
   if (!email || !password) {
     throw new Error('Usage: npm run seed:admin -- --email=you@example.com --password="..." [--name="..."]')

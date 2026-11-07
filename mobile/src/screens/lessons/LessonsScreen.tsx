@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
@@ -8,6 +8,7 @@ import type { PathLesson, PathUnit } from '../../api/types'
 import { Icon } from '../../components/Icon'
 import { BrandHeader, Button, Card, Kicker, LoadingView, Screen, styles as ui } from '../../components/ui'
 import { colors, radius, spacing, type } from '../../design/tokens'
+import { lessonLabels } from '../../lib/lessonLabels'
 import type { LessonsStackParamList } from '../../navigation/types'
 
 type Nav = NativeStackNavigationProp<LessonsStackParamList>
@@ -23,18 +24,6 @@ export function LessonsScreen() {
   const navigation = useNavigation<Nav>()
   const pathQuery = useQuery({ queryKey: ['path'], queryFn: api.path })
 
-  const numbering = useMemo(() => {
-    const numbers = new Map<string, number>()
-    let index = 0
-    for (const unit of pathQuery.data?.units ?? []) {
-      for (const lesson of unit.lessons) {
-        index += 1
-        numbers.set(lesson.id, index)
-      }
-    }
-    return numbers
-  }, [pathQuery.data])
-
   return (
     <Screen contentStyle={styles.content}>
       <BrandHeader />
@@ -42,9 +31,6 @@ export function LessonsScreen() {
       <View style={styles.heading}>
         <Kicker>Lessons</Kicker>
         <Text style={[type.display, { marginTop: 2 }]}>Read it, then practise it</Text>
-        <Text style={[type.bodySmall, { color: colors.muted, marginTop: 4 }]}>
-          Open a lesson to see its words and how to use them, then run the exercises.
-        </Text>
       </View>
 
       {pathQuery.isPending ? <LoadingView label="Loading lessons…" /> : null}
@@ -65,11 +51,11 @@ export function LessonsScreen() {
 
       {pathQuery.data ? (
         <View style={styles.list}>
-          {pathQuery.data.units.map((unit) => (
+          {pathQuery.data.units.map((unit, unitIndex) => (
             <UnitBlock
               key={unit.id}
               unit={unit}
-              numbering={numbering}
+              unitNumber={unitIndex + 1}
               onOpen={(lessonId) => navigation.navigate('LessonGuide', { lessonId })}
             />
           ))}
@@ -85,15 +71,16 @@ export function LessonsScreen() {
 
 function UnitBlock({
   unit,
-  numbering,
+  unitNumber,
   onOpen,
 }: {
   unit: PathUnit
-  numbering: Map<string, number>
+  unitNumber: number
   onOpen: (lessonId: string) => void
 }) {
   const tint = unitTint[unit.colour] ?? colors.blue
   const locked = unit.state === 'locked'
+  const labels = lessonLabels(unit.lessons)
 
   return (
     <View style={styles.unit}>
@@ -102,18 +89,18 @@ function UnitBlock({
           <Icon name={locked ? 'lock' : 'book'} size={18} color={colors.white} />
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[type.label, { color: colors.muted }]}>{unit.titleEn}</Text>
+          <Text style={[type.label, { color: colors.muted }]}>Lesson {unitNumber}</Text>
           <Text style={[type.title, { color: locked ? colors.muted : colors.ink }]}>{unit.title}</Text>
         </View>
         {unit.state === 'done' ? <Icon name="check" size={20} color={colors.green} /> : null}
       </View>
 
       <View style={styles.lessons}>
-        {unit.lessons.map((lesson) => (
+        {unit.lessons.map((lesson, index) => (
           <LessonCard
             key={lesson.id}
             lesson={lesson}
-            number={numbering.get(lesson.id) ?? 0}
+            label={labels[index] ?? 'Section'}
             tint={tint}
             onOpen={onOpen}
           />
@@ -125,12 +112,12 @@ function UnitBlock({
 
 function LessonCard({
   lesson,
-  number,
+  label,
   tint,
   onOpen,
 }: {
   lesson: PathLesson
-  number: number
+  label: string
   tint: string
   onOpen: (lessonId: string) => void
 }) {
@@ -140,7 +127,7 @@ function LessonCard({
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={`Lesson ${number}: ${lesson.title}${locked ? ', locked' : done ? ', complete' : ''}`}
+      accessibilityLabel={`${label}: ${lesson.title}${locked ? ', locked' : done ? ', complete' : ''}`}
       disabled={locked}
       onPress={() => onOpen(lesson.id)}
       style={({ pressed }) => [
@@ -159,7 +146,7 @@ function LessonCard({
       </View>
 
       <View style={{ flex: 1 }}>
-        <Text style={[type.caption, { color: colors.muted }]}>Lesson {number}</Text>
+        <Text style={[type.caption, { color: colors.muted }]}>{label}</Text>
         <Text style={[type.subtitle, { color: locked ? colors.muted : colors.ink, marginTop: 2 }]}>
           {lesson.title}
         </Text>

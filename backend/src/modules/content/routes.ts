@@ -50,6 +50,7 @@ contentRouter.get(
           slug: lesson.slug,
           title: lesson.title,
           subtitle: lesson.subtitle,
+          kind: lesson.kind,
           xp: lesson.xpBonus,
           exerciseCount: lesson.exercises.length,
           state,

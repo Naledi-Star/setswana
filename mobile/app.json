@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Puo",
+    "name": "Learn Setswana",
     "slug": "puo",
     "version": "1.0.0",
     "owner": "naledistar",
@@ -18,7 +18,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.puo.online",
       "infoPlist": {
-        "NSMicrophoneUsageDescription": "Puo records your voice so you can hear yourself repeat a Setswana phrase. Recordings stay on your device."
+        "NSMicrophoneUsageDescription": "Learn Setswana records your voice so you can hear yourself repeat a Setswana phrase. Recordings stay on your device."
       }
     },
     "android": {
