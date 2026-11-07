@@ -128,7 +128,7 @@ export function WelcomeScreen({ navigation }: { navigation: { navigate: (screen:
         ) : null}
       </View>
 
-      <View style={styles.bottomPattern} pointerEvents="none" />
+      {/* <View style={styles.bottomPattern} pointerEvents="none" /> */}
     </Screen>
   )
 }
@@ -207,8 +207,8 @@ export function SignInScreen({
     <Screen>
       <BrandHeader compact />
       <Text style={[type.display, { marginTop: spacing.lg }]}>Welcome back</Text>
-      <Text style={[type.bodySmall, { color: colors.muted, marginTop: 4, marginBottom: spacing.xxl }]}>
-        Dumela gape — pick up where you left off.
+      <Text style={[type.bodySmall, { color: colors.muted, marginBottom: spacing.xxl }]}>
+        
       </Text>
 
       {error ? (
@@ -515,7 +515,7 @@ const styles = StyleSheet.create({
   },
   guide: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     marginTop: spacing.xl,
     minHeight: 190,
   },
@@ -531,23 +531,34 @@ const styles = StyleSheet.create({
   },
   artWrap: { width: '46%', alignItems: 'center', justifyContent: 'flex-end' },
   leaves: { position: 'absolute', left: -30, bottom: -6 },
-  hello: { flex: 1, paddingLeft: spacing.md, paddingBottom: spacing.lg },
-  helloTitleWrap: { alignSelf: 'flex-start' },
+  hello: {
+    flex: 1,
+    paddingLeft: spacing.md,
+    paddingBottom: spacing.lg,
+  },
+  helloTitleWrap: {
+    alignSelf: 'flex-start',
+    paddingRight: 16,
+    paddingTop: 6,
+    paddingBottom: 2,
+    overflow: 'visible',
+  },
   helloTitle: {
     fontFamily: fonts.displayCaveat,
     fontSize: 34,
     color: colors.navy,
-    transform: [{ rotate: '-4deg' }],
+    transform: [{ rotate: '-2deg' }],
+    includeFontPadding: false,
   },
   helloUnderline: {
     height: 3,
     borderRadius: 2,
     backgroundColor: colors.orange,
     marginTop: 2,
-    alignSelf: 'stretch',
+    width: '100%',
   },
   helloBody: {
-    marginTop: spacing.sm,
+    marginTop: 2,
     color: colors.textLight,
     fontFamily: fonts.bodyMedium,
     fontSize: 13,
@@ -588,7 +599,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: spacing.sm,
   },
-  textButtonLabel: { fontFamily: fonts.bodyBold, fontSize: 15, color: colors.blue },
+  textButtonLabel: {
+    fontFamily: fonts.bodyBold,
+    fontSize: 15,
+    color: colors.blue,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
+  },
   pressed: { transform: [{ translateY: 2 }] },
   bottomPattern: {
     position: 'absolute',

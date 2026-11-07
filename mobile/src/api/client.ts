@@ -38,6 +38,8 @@ function defaultBaseUrl(): string {
 
 export const API_URL = defaultBaseUrl()
 
+const DEFAULT_TIMEOUT_MS = 30_000
+
 export class ApiError extends Error {
   readonly status: number
   readonly code: string
@@ -63,7 +65,7 @@ export class ApiError extends Error {
 let accessToken: string | null = null
 let guestToken: string | null = null
 let refreshing: Promise<boolean> | null = null
-let onSessionExpired: (() => void) | null = null
+const sessionExpiredListeners = new Set<() => void>()
 
 export function setAccessToken(token: string | null) {
   accessToken = token
@@ -78,8 +80,26 @@ export function clearAuthToken() {
   guestToken = null
 }
 
-export function onUnauthorized(listener: () => void) {
-  onSessionExpired = listener
+/**
+ * Subscribe to session-expired notifications. Returns an unsubscribe function.
+ * Multiple listeners are supported so multiple providers (e.g. AuthProvider
+ * plus analytics) can observe the event independently.
+ */
+export function onUnauthorized(listener: () => void): () => void {
+  sessionExpiredListeners.add(listener)
+  return () => {
+    sessionExpiredListeners.delete(listener)
+  }
+}
+
+function notifySessionExpired() {
+  for (const listener of sessionExpiredListeners) {
+    try {
+      listener()
+    } catch {
+      // A listener throwing must not prevent the others from running.
+    }
+  }
 }
 
 export function authToken(): string | null {
@@ -99,6 +119,10 @@ type RequestOptions = {
   idempotencyKey?: string
   anonymous?: boolean
   allowRefresh?: boolean
+  /** Override the default timeout. Pass `0` to disable. */
+  timeoutMs?: number
+  /** Caller-supplied abort signal; cancelled if the caller unmounts. */
+  signal?: AbortSignal
 }
 
 async function parseResponse(response: Response): Promise<unknown> {
@@ -120,17 +144,24 @@ async function refreshAccessToken(): Promise<boolean> {
 
     try {
       const device = await getDeviceInfo()
-      const response = await fetch(`${API_URL}/api/v1/auth/refresh`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ refreshToken: stored, deviceId: device.deviceId }),
-      })
-      if (!response.ok) return false
-      const data = (await parseResponse(response)) as RefreshedSessionResponse | null
-      if (!data?.accessToken) return false
-      accessToken = data.accessToken
-      await storage.setRefreshToken(data.refreshToken)
-      return true
+      const controller = new AbortController()
+      const timer = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT_MS)
+      try {
+        const response = await fetch(`${API_URL}/api/v1/auth/refresh`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ refreshToken: stored, deviceId: device.deviceId }),
+          signal: controller.signal,
+        })
+        if (!response.ok) return false
+        const data = (await parseResponse(response)) as RefreshedSessionResponse | null
+        if (!data?.accessToken) return false
+        accessToken = data.accessToken
+        await storage.setRefreshToken(data.refreshToken)
+        return true
+      } finally {
+        clearTimeout(timer)
+      }
     } catch {
       return false
     } finally {
@@ -139,6 +170,41 @@ async function refreshAccessToken(): Promise<boolean> {
   })()
 
   return refreshing
+}
+
+/**
+ * Merge an external abort signal with the internal timeout so either can
+ * cancel the underlying fetch. Returns the merged signal and a cleanup fn.
+ */
+function linkedSignal(
+  external: AbortSignal | undefined,
+  timeoutMs: number,
+): { signal: AbortSignal | undefined; cleanup: () => void } {
+  if (!external && timeoutMs <= 0) {
+    return { signal: undefined, cleanup: () => {} }
+  }
+
+  const controller = new AbortController()
+  const abort = () => controller.abort()
+
+  if (external) {
+    if (external.aborted) {
+      controller.abort()
+    } else {
+      external.addEventListener('abort', abort, { once: true })
+    }
+  }
+
+  const timer =
+    timeoutMs > 0 ? setTimeout(() => controller.abort(), timeoutMs) : null
+
+  return {
+    signal: controller.signal,
+    cleanup: () => {
+      if (timer) clearTimeout(timer)
+      if (external) external.removeEventListener('abort', abort)
+    },
+  }
 }
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
@@ -150,15 +216,31 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   }
   if (options.idempotencyKey) headers['idempotency-key'] = options.idempotencyKey
 
+  const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS
+  const { signal, cleanup } = linkedSignal(options.signal, timeoutMs)
+
   let response: Response
   try {
     response = await fetch(`${API_URL}${path}`, {
       method: options.method ?? 'GET',
       headers,
       ...(options.body !== undefined ? { body: JSON.stringify(options.body) } : {}),
+      ...(signal ? { signal } : {}),
     })
-  } catch {
+  } catch (caught) {
+    // Distinguish caller-cancellation from genuine network failure. If the
+    // caller's signal was the one that fired, rethrow as a distinguishable
+    // code so screens can ignore it silently.
+    if (options.signal?.aborted) {
+      throw new ApiError(0, 'ABORTED', 'Request cancelled.')
+    }
+    // Otherwise it was either a timeout (controller fired) or a network error.
+    if (signal?.aborted) {
+      throw new ApiError(0, 'TIMEOUT', 'The request took too long. Please try again.')
+    }
     throw new ApiError(0, 'NETWORK', 'Puo needs a connection. Check your network and try again.')
+  } finally {
+    cleanup()
   }
 
   const rawBody = await parseResponse(response)
@@ -170,30 +252,41 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     }
     if (accessToken) {
       accessToken = null
-      onSessionExpired?.()
+      notifySessionExpired()
     }
   }
 
   const body = rawBody as
-    | { error?: { code?: string; message?: string; fields?: Record<string, string> }; retryAfter?: number }
+    | {
+        error?: { code?: string; message?: string; fields?: Record<string, string> }
+        retryAfter?: number
+      }
     | T
     | null
 
   if (!response.ok) {
     const error = (body as { error?: { code?: string; message?: string; fields?: Record<string, string> } } | null)
       ?.error
+    const retryAfterHeader = response.headers.get('retry-after')
+    const retryAfterSeconds = retryAfterHeader ? Number(retryAfterHeader) : undefined
+    const retryAfter =
+      typeof retryAfterSeconds === 'number' && Number.isFinite(retryAfterSeconds)
+        ? retryAfterSeconds
+        : (body as { retryAfter?: number } | null)?.retryAfter
+
     throw new ApiError(
       response.status,
       error?.code ?? 'INTERNAL',
       error?.message ?? 'Something went wrong. Please try again.',
       error?.fields,
+      retryAfter,
     )
   }
 
   return body as T
 }
 
-export const api = {
+export const api = Object.freeze({
   config: () => request<PublicConfig>('/api/v1/config', { anonymous: true, allowRefresh: false }),
 
   register: (input: {
@@ -323,7 +416,7 @@ export const api = {
   registerDevice: (input: { expoPushToken: string; platform: 'ios' | 'android'; deviceId: string }) =>
     request<{ id: string }>('/api/v1/devices', { method: 'POST', body: input }),
 
-  admin: {
+  admin: Object.freeze({
     units: () => request<{ units: AdminUnit[] }>('/api/v1/admin/units'),
     createUnit: (input: { title: string; titleEn: string; colour?: string; isPublished?: boolean }) =>
       request<AdminUnit>('/api/v1/admin/units', { method: 'POST', body: input }),
@@ -365,7 +458,7 @@ export const api = {
       request<{ units: number; lessons: number; exercises: number; words: number; users: number }>(
         '/api/v1/admin/health',
       ),
-  },
-}
+  }),
+})
 
 export type Api = typeof api
